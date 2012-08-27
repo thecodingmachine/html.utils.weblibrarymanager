@@ -15,8 +15,8 @@ When the *toHtml* method is called on the *defaultWebLibraryRenderer*, it will a
 
 If your WebLibrary depends on other web libraries (for instance, if you import jQueryUI, that requires jQuery), the WebLibraryManager will manage all the dependencies for you.
 
-Installing StatsGrid:
----------------------
+Installing WebLibraryManager:
+-----------------------------
 
 WebLibraryManager comes as a composer package (the name of the package is *mouf/html.utils.weblibrarymanager*)
 Usually, you do not install this package by yourself. It should be a dependency of a Mouf template that you will use.
