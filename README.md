@@ -10,10 +10,11 @@ When installed, the WebLibraryManager package creates to instances:
 - defaultWebLibraryRenderer (an instance of the DefaultWebLibraryRenderer class)
 
 The usage is simple: when you want to import a new Javascript/CSS library, you create an instance of *WebLibrary*, you put the list of CSS/JS files in it, and you add this instance to *defaultWebLibraryManager*.
-You put the *defaultWebLibraryRenderer* in your template (this is usually done by default by the template installer).
-When the *toHtml* method is called on the *defaultWebLibraryRenderer*, it will automatically import all JS/CSS files.
+You put the *defaultWebLibraryManager* in your template (this is usually done by default by the template installer).
+When the *toHtml* method is called on the *defaultWebLibraryManager*, it will automatically import all JS/CSS files.
 
 If your WebLibrary depends on other web libraries (for instance, if you import jQueryUI, that requires jQuery), the WebLibraryManager will manage all the dependencies for you.
+If you have special needs about the way to import CSS/JS files, you can develop your own WebLibraryRenderer that will render your library (for instance with inline JS, ...)
 
 Installing WebLibraryManager:
 -----------------------------
