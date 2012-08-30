@@ -23,7 +23,7 @@
     },
     "mouf": {
     	"install": {
-    		"install.php"=>"file"
+    		"install.php":"file"
     	}
     }
 }
