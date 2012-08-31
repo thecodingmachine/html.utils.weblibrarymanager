@@ -1,7 +1,7 @@
 WebLibraryManager: a PHP class to manage Javascript/CSS dependencies in your project
 ====================================================================================
 
-WebLibraryManager is a [http://mouf-php.com](Mouf package) that allows you to import CSS/Javascript in your project the simple way.
+WebLibraryManager is a [Mouf package](http://mouf-php.com) that allows you to import CSS/Javascript in your project the simple way.
 
 You can use it without Mouf, but most of the time, you will use Mouf and its install process to get quickly started.
 
