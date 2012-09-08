@@ -21,21 +21,21 @@ interface WebLibraryRendererInterface {
 	/**
 	 * Renders the CSS part of a web library.
 	 * 
-	 * @param WebLibrary $webLibrary
+	 * @param WebLibraryInterface $webLibrary
 	 */
-	function toCssHtml(WebLibrary $webLibrary);
+	function toCssHtml(WebLibraryInterface $webLibrary);
 	
 	/**
 	 * Renders the JS part of a web library.
 	 *
-	 * @param WebLibrary $webLibrary
+	 * @param WebLibraryInterface $webLibrary
 	 */
-	function toJsHtml(WebLibrary $webLibrary);
+	function toJsHtml(WebLibraryInterface $webLibrary);
 	
 	/**
 	 * Renders any additional HTML that should be outputed below the JS and CSS part.
 	 *
-	 * @param WebLibrary $webLibrary
+	 * @param WebLibraryInterface $webLibrary
 	 */
-	function toAdditionalHtml(WebLibrary $webLibrary);
+	function toAdditionalHtml(WebLibraryInterface $webLibrary);
 }

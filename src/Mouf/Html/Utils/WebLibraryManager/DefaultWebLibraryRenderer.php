@@ -25,7 +25,7 @@ class DefaultWebLibraryRenderer implements WebLibraryRendererInterface {
 	 *
 	 * @param WebLibrary $webLibrary
 	 */
-	public function toCssHtml(WebLibrary $webLibrary) {
+	public function toCssHtml(WebLibraryInterface $webLibrary) {
 		$files = $webLibrary->getCssFiles();
 		if ($files) {
 			foreach ($files as $file) {	
@@ -44,7 +44,7 @@ class DefaultWebLibraryRenderer implements WebLibraryRendererInterface {
 	 *
 	 * @param WebLibrary $webLibrary
 	 */
-	public function toJsHtml(WebLibrary $webLibrary) {
+	public function toJsHtml(WebLibraryInterface $webLibrary) {
 		$files = $webLibrary->getJsFiles();
 		if ($files) {
 			foreach ($files as $file) {
@@ -64,7 +64,7 @@ class DefaultWebLibraryRenderer implements WebLibraryRendererInterface {
 	 *
 	 * @param WebLibrary $webLibrary
 	 */
-	public function toAdditionalHtml(WebLibrary $webLibrary) {
+	public function toAdditionalHtml(WebLibraryInterface $webLibrary) {
 		return "";
 	}
 }
