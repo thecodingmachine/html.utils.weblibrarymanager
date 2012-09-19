@@ -1,6 +1,8 @@
 <?php 
 namespace Mouf\Html\Utils\WebLibraryManager;
 
+use Mouf\MoufManager;
+
 use Mouf\Html\HtmlElement\HtmlElementInterface;
 
 /**

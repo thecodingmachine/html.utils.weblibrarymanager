@@ -103,12 +103,14 @@ class InlineWebLibrary implements WebLibraryInterface, WebLibraryRendererInterfa
      * @param WebLibraryInterface $webLibrary
      */
     function toCssHtml(WebLibraryInterface $webLibrary) {
-   		$fileName = ROOT_PATH.$this->cssPhpFile;
-
-    	if ($this->scope != null) {
-    		$this->scope->loadFile($fileName);
-    	} else {
-    		require $fileName;
+    	if ($this->cssPhpFile) {
+	   		$fileName = ROOT_PATH.$this->cssPhpFile;
+	
+	    	if ($this->scope != null) {
+	    		$this->scope->loadFile($fileName);
+	    	} else {
+	    		require $fileName;
+	    	}
     	}
     }
     
@@ -118,12 +120,14 @@ class InlineWebLibrary implements WebLibraryInterface, WebLibraryRendererInterfa
      * @param WebLibraryInterface $webLibrary
      */
     function toJsHtml(WebLibraryInterface $webLibrary) {
-    	$fileName = ROOT_PATH.$this->jsPhpFile;
-
-    	if ($this->scope != null) {
-    		$this->scope->loadFile($fileName);
-    	} else {
-    		require $fileName;
+    	if ($this->jsPhpFile) {
+	    	$fileName = ROOT_PATH.$this->jsPhpFile;
+	
+	    	if ($this->scope != null) {
+	    		$this->scope->loadFile($fileName);
+	    	} else {
+	    		require $fileName;
+	    	}
     	}
     }
     
@@ -133,12 +137,14 @@ class InlineWebLibrary implements WebLibraryInterface, WebLibraryRendererInterfa
      * @param WebLibraryInterface $webLibrary
      */
     function toAdditionalHtml(WebLibraryInterface $webLibrary) {
-    $fileName = ROOT_PATH.$this->additionalPhpFile;
-
-    	if ($this->scope != null) {
-    		$this->scope->loadFile($fileName);
-    	} else {
-    		require $fileName;
+    	if ($this->additionalPhpFile) {
+	    	$fileName = ROOT_PATH.$this->additionalPhpFile;
+	
+	    	if ($this->scope != null) {
+	    		$this->scope->loadFile($fileName);
+	    	} else {
+	    		require $fileName;
+	    	}
     	}
     }
 }
