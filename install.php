@@ -10,10 +10,10 @@ InstallUtils::init(InstallUtils::$INIT_APP);
 // Let's create the instances
 $moufManager = MoufManager::getMoufManager();
 if (!$moufManager->instanceExists("defaultWebLibraryRenderer")) {
-	$moufManager->declareComponent("defaultWebLibraryRenderer", "\Mouf\Html\Utils\WebLibraryManager\DefaultWebLibraryRenderer");
+	$moufManager->declareComponent("defaultWebLibraryRenderer", "Mouf\\Html\\Utils\\WebLibraryManager\\DefaultWebLibraryRenderer");
 }
 if (!$moufManager->instanceExists("defaultWebLibraryManager")) {
-	$moufManager->declareComponent("defaultWebLibraryManager", "\Mouf\Html\Utils\WebLibraryManager\WebLibraryManager");
+	$moufManager->declareComponent("defaultWebLibraryManager", "Mouf\\Html\\Utils\\WebLibraryManager\\WebLibraryManager");
 }
 
 // Let's rewrite the MoufComponents.php file to save the component
