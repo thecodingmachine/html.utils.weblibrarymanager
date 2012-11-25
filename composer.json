@@ -23,10 +23,12 @@
     },
     "extra": {
 	    "mouf": {
-	    	"install": {
-			"type": "file",
-	    		"file": "install.php"
-	    	}
+	    	"install": [
+			{
+				"type": "file",
+		    		"file": "install.php"
+		    	}
+		]
 	    }
 	}
 }
