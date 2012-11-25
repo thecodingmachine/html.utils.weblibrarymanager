@@ -24,7 +24,8 @@
     "extra": {
 	    "mouf": {
 	    	"install": {
-	    		"install.php":"file"
+			"type": "file",
+	    		"file": "install.php"
 	    	}
 	    }
 	}
