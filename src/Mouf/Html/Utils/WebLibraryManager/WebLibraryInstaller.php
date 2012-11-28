@@ -20,9 +20,10 @@ class WebLibraryInstaller {
 	 * @param array<string> $jsFiles The list of js files to add (relative to root directory)
 	 * @param array<string> $cssFiles The list of css files to add (relative to root directory)
 	 * @param array<string> $dependencies The list of dependencies (the name of the instances)
+	 * @param bool $bindToWebLibraryManager Whether we should bind the declared weblibrary directly in the defaultWebLibraryManager or not.
 	 * @param MoufManager $moufManager The moufManager to be used for installation (defaults to default mouf manager)
 	 */
-	public static function installLibrary($instanceName, array $jsFiles, array $cssFiles = array(), array $dependencies = array(), $moufManager = null) {
+	public static function installLibrary($instanceName, array $jsFiles, array $cssFiles = array(), array $dependencies = array(), $bindToWebLibraryManager = true, $moufManager = null) {
 		if ($moufManager == null) {
 			$moufManager = MoufManager::getMoufManager();
 		}
@@ -46,11 +47,13 @@ class WebLibraryInstaller {
 		
 		$library->getProperty("dependencies")->setValue($dependenciesInstances);
 		
-		$webLibraryManager = $moufManager->getInstanceDescriptor('defaultWebLibraryManager');
-		if ($webLibraryManager) {
-			$libraries = $webLibraryManager->getProperty("webLibraries")->getValue();
-			$libraries[] = $library;
-			$webLibraryManager->getProperty("webLibraries")->setValue($libraries);
+		if ($bindToWebLibraryManager) {
+			$webLibraryManager = $moufManager->getInstanceDescriptor('defaultWebLibraryManager');
+			if ($webLibraryManager) {
+				$libraries = $webLibraryManager->getProperty("webLibraries")->getValue();
+				$libraries[] = $library;
+				$webLibraryManager->getProperty("webLibraries")->setValue($libraries);
+			}
 		}
 		
 	}
