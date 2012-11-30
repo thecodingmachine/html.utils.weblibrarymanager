@@ -8,6 +8,11 @@ namespace Mouf\Html\Utils\WebLibraryManager;
  */
 class WebLibrary implements WebLibraryInterface {
 	
+	
+	public function __construct($jsFiles = array(), $cssFiles = array() ) {
+			$this->jsFiles= $jsFiles;
+			$this->cssFiles = $cssFiles;
+	}
 	/**
 	 * List of JS files to add in header.
      * If you don't specify http:// or https://, the file is considered to be relative to ROOT_URL.
