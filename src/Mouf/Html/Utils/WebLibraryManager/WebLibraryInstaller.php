@@ -31,7 +31,7 @@ class WebLibraryInstaller {
 		if ($moufManager->instanceExists($instanceName)) {
 			$library = $moufManager->getInstanceDescriptor($instanceName);
 		} else {
-			$library = $moufManager->createInstance("\\Mouf\\Html\\Utils\\WebLibraryManager\\WebLibrary");
+			$library = $moufManager->createInstance("Mouf\\Html\\Utils\\WebLibraryManager\\WebLibrary");
 			$library->setName($instanceName);
 		}
 		$library->getProperty("jsFiles")->setValue($jsFiles);
