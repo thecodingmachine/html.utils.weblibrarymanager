@@ -1,6 +1,10 @@
 <?php
 namespace Mouf\Html\Utils\WebLibraryManager;
+use Mouf\Html\HtmlElement\HtmlFromFile;
 
+use Mouf\Html\HtmlElement\HtmlString;
+
+use Mouf\Html\HtmlElement\HtmlElementInterface;
 use Mouf\Html\HtmlElement\Scopable;
 use Mouf\Html\Utils\WebLibraryManager\WebLibraryInterface;
 use Mouf\Html\Utils\WebLibraryManager\WebLibraryRendererInterface;
@@ -17,38 +21,27 @@ class InlineWebLibrary implements WebLibraryInterface, WebLibraryRendererInterfa
 	 * A PHP file to be executed fro including inline JS into your &lt;head&gt; tag.
 	 * The path is relative to ROOT_PATH.
 	 * 
-	 * @Property
-	 * @var string
+	 * @var HtmlElementInterface
 	 */
-	public $jsPhpFile;
+	public $jsElement;
 	
 	/**
 	 * A PHP file to be executed fro including inline CSS into your &lt;head&gt; tag.
 	 * The path is relative to ROOT_PATH.
 	 * 
-	 * @Property
-	 * @var string
+	 * @var HtmlElementInterface
 	 */
-	public $cssPhpFile;
+	public $cssElement;
 	
 	/**
 	 * A PHP file to be executed fro including inline CSS or JS into your &lt;head&gt; tag.
 	 * The path is relative to ROOT_PATH.
 	 * The content of this file is displayed BELOW JS and CSS inclusion.
 	 *
-	 * @Property
-	 * @var string
+	 * @var HtmlElementInterface
 	 */
-	public $additionalPhpFile;
+	public $additionalElement;
 	
-	/**
-	 * The scope the files will be executed in.
-	 *
-	 * @Property
-	 * @var Scopable
-	 */
-	public $scope;
-    
     /**
      * Returns an array of Javascript files to be included for this library.
      *
@@ -103,14 +96,15 @@ class InlineWebLibrary implements WebLibraryInterface, WebLibraryRendererInterfa
      * @param WebLibraryInterface $webLibrary
      */
     function toCssHtml(WebLibraryInterface $webLibrary) {
-    	if ($this->cssPhpFile) {
-	   		$fileName = ROOT_PATH.$this->cssPhpFile;
+    	if ($this->cssElement) {
+// 	   		$fileName = ROOT_PATH.$this->cssPhpFile;
 	
-	    	if ($this->scope != null) {
-	    		$this->scope->loadFile($fileName);
-	    	} else {
-	    		require $fileName;
-	    	}
+// 	    	if ($this->scope != null) {
+// 	    		$this->scope->loadFile($fileName);
+// 	    	} else {
+// 	    		require $fileName;
+// 	    	}
+			$this->cssElement->toHtml();
     	}
     }
     
@@ -120,14 +114,15 @@ class InlineWebLibrary implements WebLibraryInterface, WebLibraryRendererInterfa
      * @param WebLibraryInterface $webLibrary
      */
     function toJsHtml(WebLibraryInterface $webLibrary) {
-    	if ($this->jsPhpFile) {
-	    	$fileName = ROOT_PATH.$this->jsPhpFile;
+    	if ($this->jsElement) {
+// 	    	$fileName = ROOT_PATH.$this->jsPhpFile;
 	
-	    	if ($this->scope != null) {
-	    		$this->scope->loadFile($fileName);
-	    	} else {
-	    		require $fileName;
-	    	}
+// 	    	if ($this->scope != null) {
+// 	    		$this->scope->loadFile($fileName);
+// 	    	} else {
+// 	    		require $fileName;
+// 	    	}
+			$this->jsElement->toHtml();
     	}
     }
     
@@ -137,15 +132,77 @@ class InlineWebLibrary implements WebLibraryInterface, WebLibraryRendererInterfa
      * @param WebLibraryInterface $webLibrary
      */
     function toAdditionalHtml(WebLibraryInterface $webLibrary) {
-    	if ($this->additionalPhpFile) {
-	    	$fileName = ROOT_PATH.$this->additionalPhpFile;
+    	if ($this->additionalElement) {
+// 	    	$fileName = ROOT_PATH.$this->additionalPhpFile;
 	
-	    	if ($this->scope != null) {
-	    		$this->scope->loadFile($fileName);
-	    	} else {
-	    		require $fileName;
-	    	}
+// 	    	if ($this->scope != null) {
+// 	    		$this->scope->loadFile($fileName);
+// 	    	} else {
+// 	    		require $fileName;
+// 	    	}
+			$this->additionalElement->toHtml();
     	}
     }
+    
+    /**
+     * Sets the script outputed in the JS section
+     * @param string $script
+     */
+    function setJSFromText($script){
+    	$this->jsElement = new HtmlString($script);
+    }
+    
+    
+    /**
+     * Sets the script outputed in the JS section
+     * 
+     * @param string $filename
+     * @param Scopable $scope
+     * @param bool $relativeToRootPath
+     */
+    function setJSFromFile($filename, $scope = null, $relativeToRootPath = true){
+    	$this->jsElement = new HtmlFromFile($filename, $scope, $relativeToRootPath);
+    }
+    
+    /**
+     * Sets the css outputed in the CSS section
+     * @param string $css
+     */
+    function setCSSFromText($css){
+    	$this->cssElement = new HtmlString($css);
+    }
+    
+    
+    /**
+     * Sets the script outputed in the CSS section
+     * 
+     * @param string $filename
+     * @param Scopable $scope
+     * @param bool $relativeToRootPath
+     */
+    function setCSSFromFile($filename, $scope = null, $relativeToRootPath = true){
+    	$this->cssElement = new HtmlFromFile($filename, $scope, $relativeToRootPath);
+    }
+    
+    /**
+     * Sets the additional items outputed below the JS and CSS sections
+     * @param string $script
+     */
+    function setAdditionalElementFromText($script){
+    	$this->additionalElement = new HtmlString($script);
+    }
+    
+    
+    /**
+     * Sets the additional items outputed below the JS and CSS sections
+     *
+     * @param string $filename
+     * @param Scopable $scope
+     * @param bool $relativeToRootPath
+     */
+    function setAdditionalElementFromFile($filename, $scope = null, $relativeToRootPath = true){
+    	$this->additionalElement = new HtmlFromFile($filename, $scope, $relativeToRootPath);
+    }
+    
 }
 ?>
