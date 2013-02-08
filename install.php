@@ -22,7 +22,8 @@ if (!$moufManager->instanceExists("defaultWebLibraryManager")) {
 		if (!$moufManager->instanceExists("rootUrlJsFile")) {
 			$rootUrlJsFile = $moufManager->createInstance("Mouf\\Html\\HtmlElement\\HtmlFromFile");
 			$rootUrlJsFile->setName("rootUrlJsFile");
-			$rootUrlJsFile->getProperty("fileName")->setValue(MoufUtils::getUrlPathFromFilePath(__DIR__."/javascript/rootUrl.php"), true);
+			//$rootUrlJsFile->getProperty("fileName")->setValue(MoufUtils::getUrlPathFromFilePath(__DIR__."/javascript/rootUrl.php"), true);
+			$rootUrlJsFile->getProperty("fileName")->setValue("vendor/mouf/html.utils.weblibrarymanager/javascript/rootUrl.php");
 		} else {
 			$rootUrlJsFile = $moufManager->getInstanceDescriptor("rootUrlJsFile");
 		}
