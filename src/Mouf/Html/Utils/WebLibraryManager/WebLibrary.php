@@ -152,7 +152,7 @@ class WebLibrary implements WebLibraryInterface {
 	 * <p>If none is passed, the WebLibraryManager will use the default renderer instance (named "defaultWebLibraryRenderer").</p>
 	 *
 	 * @Property
-	 * @param WebLibraryRendererInterface $jsFiles
+	 * @param WebLibraryRendererInterface $renderer
 	 */
 	public function setRenderer(WebLibraryRendererInterface $renderer) {
 		$this->renderer = $renderer;
