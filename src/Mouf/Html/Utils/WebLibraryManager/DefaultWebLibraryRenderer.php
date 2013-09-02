@@ -34,7 +34,7 @@ class DefaultWebLibraryRenderer implements WebLibraryRendererInterface {
 				} else {
 					$url = $file;
 				}	
-				echo "<link href='$url' rel='stylesheet' type='text/css' />\n";
+				echo "<link href='".htmlspecialchars($url, ENT_QUOTES)."' rel='stylesheet' type='text/css' />\n";
 			}
 		}
 	}
@@ -53,7 +53,7 @@ class DefaultWebLibraryRenderer implements WebLibraryRendererInterface {
 				} else {
 					$url = $file;
 				}	
-				echo '<script type="text/javascript" src="'.$url.'"></script>'."\n";
+				echo '<script type="text/javascript" src="'.htmlspecialchars($url, ENT_QUOTES).'"></script>'."\n";
 			}
 		}
 		
