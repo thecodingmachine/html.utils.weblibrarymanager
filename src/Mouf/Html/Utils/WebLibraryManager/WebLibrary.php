@@ -135,7 +135,7 @@ class WebLibrary implements WebLibraryInterface {
 	 * @return array<string>
 	 */
 	public function getFeatures() {
-		throw new Exception("Not implemented yet!");
+		throw new \Exception("Not implemented yet!");
 	}
 	
 	/**
