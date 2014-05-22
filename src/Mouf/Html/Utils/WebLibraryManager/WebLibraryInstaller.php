@@ -51,8 +51,10 @@ class WebLibraryInstaller {
 			$webLibraryManager = $moufManager->getInstanceDescriptor('defaultWebLibraryManager');
 			if ($webLibraryManager) {
 				$libraries = $webLibraryManager->getProperty("webLibraries")->getValue();
-				$libraries[] = $library;
-				$webLibraryManager->getProperty("webLibraries")->setValue($libraries);
+				if (array_search($library, $libraries) === false) {
+					$libraries[] = $library;
+					$webLibraryManager->getProperty("webLibraries")->setValue($libraries);
+				}
 			}
 		}
 		

@@ -6,8 +6,8 @@ WebLibraryManager is a [Mouf package](http://mouf-php.com) that allows you to im
 You can use it without Mouf, but most of the time, you will use Mouf and its install process to get quickly started.
 
 When installed, the WebLibraryManager package creates to instances:
-- defaultWebLibraryManager (an instance of the WebLibraryManager class)
-- defaultWebLibraryRenderer (an instance of the DefaultWebLibraryRenderer class)
+- `defaultWebLibraryManager` (an instance of the WebLibraryManager class)
+- `defaultWebLibraryRenderer` (an instance of the DefaultWebLibraryRenderer class)
 
 The usage is simple: when you want to import a new Javascript/CSS library, you create an instance of *WebLibrary*, you put the list of CSS/JS files in it, and you add this instance to *defaultWebLibraryManager*.
 You put the *defaultWebLibraryManager* in your template (this is usually done by default by the template installer).
@@ -48,3 +48,17 @@ and finally, run
 ```bash
 php composer.phar install
 ```
+
+Support for Rob Loach's components
+----------------------------------
+If you are looking for Javascript packages into Composer, you certainly found some packages that are
+respecting the "component" bundling format. [This is a format developped by Rob Loach](http://github.com/robloach/component-installer) and that
+enables packaging Javascript and CSS files in Packagist easily.
+
+For instance, have a look at the **component/jquery** package on Packagist.
+
+The **WebLibraryManager** has a built in support for these components. If you import one of those composer packages
+in your project, the **WebLibraryManager** will detect these packages and will automatically create the **WebLibrary** instances
+matching those packages.
+
+Note: right now, this process takes place on the Mouf validation page. In the future, it might take place on package installation.

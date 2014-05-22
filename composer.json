@@ -1,35 +1,43 @@
 {
-    "name": "mouf/html.utils.weblibrarymanager",
-    "description": "The Javascript/CSS library manager is a PHP class in charge of keeping track of the JS and CSS files that have been included so far in a web page. Basically, you tell the Javascript/CSS library manager to import a JS/CSS file and it will make sure it is included, only once, and that all dependencies are included as well.",
-    "keywords": ["html", "javascript", "css", "dependency", "dependencies", "mouf"],
-    "homepage": "https://github.com/thecodingmachine/html.utils.weblibrarymanager",
-    "type": "mouf-library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "David Négrier",
-            "email": "d.negrier@thecodingmachine.com",
-            "homepage": "http://mouf-php.com"
-        }
-    ],
-    "require": {
-    	"php": ">=5.3.0",
-    	"mouf/mouf-installer": "~2.0",
-    	"mouf/html.htmlelement": "~2.0"
-    },
-    "autoload": {
-        "psr-0": {
-            "Mouf\\Html\\Utils\\WebLibraryManager": "src/"
-        }
-    },
-    "extra": {
-	    "mouf": {
-	    	"install": [
-			{
-				"type": "file",
-		    		"file": "install.php"
-		    	}
-		]
-	    }
+	"name" : "mouf/html.utils.weblibrarymanager",
+	"description" : "The Javascript/CSS library manager is a PHP class in charge of keeping track of the JS and CSS files that have been included so far in a web page. Basically, you tell the Javascript/CSS library manager to import a JS/CSS file and it will make sure it is included, only once, and that all dependencies are included as well.",
+	"keywords" : [
+		"html",
+		"javascript",
+		"css",
+		"dependency",
+		"dependencies",
+		"mouf"
+	],
+	"homepage" : "https://github.com/thecodingmachine/html.utils.weblibrarymanager",
+	"type" : "mouf-library",
+	"license" : "MIT",
+	"authors" : [{
+			"name" : "David Négrier",
+			"email" : "d.negrier@thecodingmachine.com",
+			"homepage" : "http://mouf-php.com"
+		}
+	],
+	"require" : {
+		"php" : ">=5.3.0",
+		"mouf/mouf-installer" : "~2.0",
+		"mouf/html.htmlelement" : "~2.0"
+	},
+	"autoload" : {
+		"psr-0" : {
+			"Mouf\\Html\\Utils\\WebLibraryManager" : "src/"
+		}
+	},
+	"extra" : {
+		"mouf" : {
+			"install" : [{
+					"type" : "file",
+					"file" : "install.php"
+				}
+			],
+			"require-admin" : [
+				"src/WebLibraryAdmin.php"
+			]
+		}
 	}
 }
