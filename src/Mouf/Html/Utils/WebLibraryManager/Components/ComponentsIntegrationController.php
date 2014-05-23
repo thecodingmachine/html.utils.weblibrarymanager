@@ -7,6 +7,7 @@ use Mouf\Validator\MoufValidatorResult;
 use Mouf\MoufManager;
 use Mouf\Mvc\Splash\Controllers\Controller;
 use Mouf\Html\Utils\WebLibraryManager\WebLibraryInstaller;
+use Mouf\Html\Utils\WebLibraryManager\ComponentInstaller\ComponentInstaller;
 
 /**
  * This controller is in charge of integrating the "components" JS/CSS packages notion
@@ -42,47 +43,18 @@ class ComponentsIntegrationController extends Controller implements MoufStaticVa
 		$packages = $composerService->getLocalPackagesOrderedByDependencies();
 		
 		$violations = array();
-		$moufManager = MoufManager::getMoufManager();
+		$moufManager = MoufManager::getMoufManagerHiddenInstance();
 		
 		foreach ($packages as $package) {
 			/* @var $package PackageInterface */
 			if ($package->getType() != "component") {
 				continue;
 			}
-		
-			$packageName = explode('/', $package->getName())[1];
 			
-			if (!$moufManager->has("component.".$package->getName())) {
-				$extra = $package->getExtra();
-				
-				// FIXME: 'components' directory can be changed in config
-				// FIXME: check CSS and deps
-				$scripts = [];
-				if (isset($extra['component']['scripts'])) {
-					$scripts = array_map(function($script) use ($packageName) {
-						return 'components/'.$packageName.'/'.$script;
-					}, $extra['component']['scripts']);
-				}
-
-				$css = [];
-				if (isset($extra['component']['css'])) {
-					$css = array_map(function($script) use ($packageName) {
-						return 'components/'.$packageName.'/'.$script;
-					}, $extra['component']['css']);
-				}
-				
-				$deps = [];
-				if (isset($extra['component']['deps'])) {
-					$deps = array_map(function($script) {
-						return "component.".$script;
-					}, $extra['component']['css']);
-				}
-
-				WebLibraryInstaller::installLibrary("component.".$packageName, $scripts, $css, $deps);
-			}
-			$moufManager->rewriteMouf();
+			ComponentInstaller::installComponent($package, $composerService->getComposerConfig(), $moufManager);
 		}
 		
+		header('Location: '.MOUF_URL);
 	}
 	
 	/**
