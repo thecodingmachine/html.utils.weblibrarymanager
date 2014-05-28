@@ -51,14 +51,16 @@ php composer.phar install
 
 Support for Rob Loach's components
 ----------------------------------
+
 If you are looking for Javascript packages into Composer, you certainly found some packages that are
 respecting the "component" bundling format. [This is a format developped by Rob Loach](http://github.com/robloach/component-installer) and that
 enables packaging Javascript and CSS files in Packagist easily.
 
 For instance, have a look at the **component/jquery** package on Packagist.
 
-The **WebLibraryManager** has a built in support for these components. If you import one of those composer packages
+The **WebLibraryManager** has a built in support for these components. If you import one of those Composer packages
 in your project, the **WebLibraryManager** will detect these packages and will automatically create the **WebLibrary** instances
 matching those packages.
 
-Note: right now, this process takes place on the Mouf validation page. In the future, it might take place on package installation.
+Note: if you import these packages _before_ installing the WebLibraryManager, Mouf will detect the missing instances on the
+status page and will offer a button to create those missing instances automatically.
