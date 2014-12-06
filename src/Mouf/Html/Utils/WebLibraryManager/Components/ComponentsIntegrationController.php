@@ -8,6 +8,7 @@ use Mouf\MoufManager;
 use Mouf\Mvc\Splash\Controllers\Controller;
 use Mouf\Html\Utils\WebLibraryManager\WebLibraryInstaller;
 use Mouf\Html\Utils\WebLibraryManager\ComponentInstaller\ComponentInstaller;
+use Mouf\ClassProxy;
 
 /**
  * This controller is in charge of integrating the "components" JS/CSS packages notion
@@ -28,8 +29,6 @@ class ComponentsIntegrationController extends Controller implements MoufStaticVa
 	/**
 	 * The template used by the main page for mouf.
 	 *
-	 * @Property
-	 * @Compulsory
 	 * @var TemplateInterface
 	 */
 	public $template;
@@ -38,23 +37,27 @@ class ComponentsIntegrationController extends Controller implements MoufStaticVa
 	 * @Action
 	 */
 	public function fixAll() {
-
+		$componentsIntegrationController = new ClassProxy("Mouf\\Html\\Utils\\WebLibraryManager\\Components\\ComponentsIntegrationController");
+		$componentsIntegrationController->fixAllInAppScope();
+		
+		header('Location: '.MOUF_URL);
+	}
+	
+	public static function fixAllInAppScope() {
 		$composerService = new ComposerService();
 		$packages = $composerService->getLocalPackagesOrderedByDependencies();
 		
 		$violations = array();
-		$moufManager = MoufManager::getMoufManagerHiddenInstance();
+		$moufManager = MoufManager::getMoufManager();
 		
 		foreach ($packages as $package) {
 			/* @var $package PackageInterface */
 			if ($package->getType() != "component") {
 				continue;
 			}
-			
+				
 			ComponentInstaller::installComponent($package, $composerService->getComposerConfig(), $moufManager);
 		}
-		
-		header('Location: '.MOUF_URL);
 	}
 	
 	/**
@@ -75,9 +78,15 @@ class ComponentsIntegrationController extends Controller implements MoufStaticVa
 			if ($package->getType() != "component") {
 				continue;
 			}
-
-			$packageName = explode('/', $package->getName())[1];
 			
+			$extra = $package->getExtra();
+			 
+			if (isset($extra['component']['name'])) {
+				$packageName = $extra['component']['name'];
+			} else {
+				$packageName = explode('/', $package->getName())[1];
+			}
+
 			if (!$moufManager->has("component.".$packageName)) {
 				$violations[] = $packageName;
 			}

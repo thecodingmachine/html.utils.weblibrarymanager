@@ -8,6 +8,8 @@
 use Mouf\MoufManager;
 use Mouf\MoufUtils;
 
+// Force loading our controller instead of the one provided by Mouf.
+require_once __DIR__.'/Mouf/Html/Utils/WebLibraryManager/Components/ComponentsIntegrationController.php';
 /*MoufUtils::registerMainMenu('htmlMainMenu', 'HTML', null, 'mainMenu', 40);
 MoufUtils::registerMenuItem('htmlFineMainMenu', 'Fine', null, 'htmlMainMenu', 10);
 MoufUtils::registerChooseInstanceMenuItem('htmlFineSuppotedLanguageMenuItem', 'Supported languages', 'editLabels/supportedLanguages', "Mouf\\Utils\\I18n\\Fine\\Translate\\FinePHPArrayTranslationService", 'htmlFineMainMenu', 10);
