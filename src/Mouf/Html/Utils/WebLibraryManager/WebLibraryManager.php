@@ -2,8 +2,8 @@
 namespace Mouf\Html\Utils\WebLibraryManager;
 
 use Mouf\MoufManager;
-
 use Mouf\Html\HtmlElement\HtmlElementInterface;
+use Mouf\Html\Renderer\RendererInterface;
 
 /**
  * This class is in charge of including and keeping track of Javascript and CSS libraries into an HTML page.
@@ -17,14 +17,13 @@ use Mouf\Html\HtmlElement\HtmlElementInterface;
  * 
  * 
  * @author David Négrier
- * @Component
  */
 class WebLibraryManager implements HtmlElementInterface {
 	
 	/**
 	 * The array of all included libraries.
 	 * 
-	 * @var array<WebLibraryInterface>
+	 * @var WebLibraryInterface[]
 	 */
 	private $webLibraries = array();
 	
@@ -33,6 +32,21 @@ class WebLibraryManager implements HtmlElementInterface {
 	 * @var boolean
 	 */
 	private $rendered = false;
+	
+	/**
+	 * The renderer used by the application. Usually, this points to the 'defaultRenderer' instance.
+	 * 
+	 * @var RendererInterface
+	 */
+	private $renderer;
+	
+	/**
+	 * 
+	 * @param RendererInterface $renderer The renderer used by the application. Usually, this points to the 'defaultRenderer' instance.
+	 */
+	public function __construct(RendererInterface $renderer) {
+		$this->renderer = $renderer;
+	}
 	
 	/**
 	 * Adds a library to the list of libraries that should be loaded in the web page.
@@ -64,7 +78,6 @@ class WebLibraryManager implements HtmlElementInterface {
 	 * The list of all libraries that should be loaded in the web page.
 	 * <p>If you do not pass all dependencies of a library, the dependencies will be loaded automatically.</p>
 	 * 
-	 * @Property
 	 * @param array<WebLibraryInterface> $libraries
 	 */
 	public function setWebLibraries($libraries) {
@@ -87,39 +100,17 @@ class WebLibraryManager implements HtmlElementInterface {
 		$defaultWebLibraryRenderer = null;
 		
 		foreach ($this->webLibraries as $library) {
-			/* @var $library WebLibraryInterface */
-			$renderer = $library->getRenderer();
-			if ($renderer == null) {
-				if ($defaultWebLibraryRenderer == null) {
-					$defaultWebLibraryRenderer = MoufManager::getMoufManager()->getInstance('defaultWebLibraryRenderer');
-				}
-				$renderer = $defaultWebLibraryRenderer;
-			}
-			/* @var $renderer WebLibraryRendererInterface */
-			$renderer->toCssHtml($library);
+			$this->renderer->render($library, 'css');
 		}
 
 		foreach ($this->webLibraries as $library) {
-			/* @var $library WebLibraryInterface */
-			$renderer = $library->getRenderer();
-			if ($renderer == null) {
-				$renderer = $defaultWebLibraryRenderer;
-			}
-			/* @var $renderer WebLibraryRendererInterface */
-			$renderer->toJsHtml($library);
+			$this->renderer->render($library, 'js');
 		}
 		
 		foreach ($this->webLibraries as $library) {
-			/* @var $library WebLibraryInterface */
-			$renderer = $library->getRenderer();
-			if ($renderer == null) {
-				$renderer = $defaultWebLibraryRenderer;
-			}
-			/* @var $renderer WebLibraryRendererInterface */
-			$renderer->toAdditionalHtml($library);
+			$this->renderer->render($library, 'additional');
 		}
 		
 		$this->rendered = true;
 	}
 }
-?>

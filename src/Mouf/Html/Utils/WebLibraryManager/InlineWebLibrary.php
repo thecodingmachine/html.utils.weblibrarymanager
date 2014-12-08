@@ -13,34 +13,76 @@ use Mouf\Html\Utils\WebLibraryManager\WebLibraryRendererInterface;
  * This class can be used to insert JS or CSS directly into the &lt;head&gt; tag (inline).
  * Content is loaded from PHP files passed to this object.
  *
- * @Component
  */
-class InlineWebLibrary implements WebLibraryInterface, WebLibraryRendererInterface {
+class InlineWebLibrary implements WebLibraryInterface {
 	
 	/**
-	 * A PHP file to be executed fro including inline JS into your &lt;head&gt; tag.
-	 * The path is relative to ROOT_PATH.
+	 * A custom Html element that will be inserted into the JS scripts into your &lt;head&gt; tag.
 	 * 
 	 * @var HtmlElementInterface
 	 */
-	public $jsElement;
+	protected $jsElement;
 	
 	/**
-	 * A PHP file to be executed fro including inline CSS into your &lt;head&gt; tag.
-	 * The path is relative to ROOT_PATH.
+	 * A custom CSS element that will be inserted into the JS scripts into your &lt;head&gt; tag.
 	 * 
 	 * @var HtmlElementInterface
 	 */
-	public $cssElement;
+	protected $cssElement;
 	
 	/**
-	 * A PHP file to be executed fro including inline CSS or JS into your &lt;head&gt; tag.
-	 * The path is relative to ROOT_PATH.
+	 * A custom Html element that will be inserted into the additional scripts into your &lt;head&gt; tag.
 	 * The content of this file is displayed BELOW JS and CSS inclusion.
 	 *
 	 * @var HtmlElementInterface
 	 */
-	public $additionalElement;
+	protected $additionalElement;
+	
+	/**
+	 * 
+	 * @param HtmlElementInterface $jsElement A custom Html element that will be inserted into the JS scripts into your &lt;head&gt; tag.
+	 * @param HtmlElementInterface $cssElement A custom CSS element that will be inserted into the JS scripts into your &lt;head&gt; tag.
+	 * @param HtmlElementInterface $additionalElement A custom Html element that will be inserted into the additional scripts into your &lt;head&gt; tag. The content of this file is displayed BELOW JS and CSS inclusion.
+	 */
+	public function __construct(HtmlElementInterface $jsElement = null,
+			HtmlElementInterface $cssElement = null,
+			HtmlElementInterface $additionalElement = null) {
+		$this->jsElement = $jsElement;
+		$this->cssElement = $cssElement;
+		$this->additionalElement = $additionalElement;
+	}
+	
+	
+	
+	/**
+	 * A custom Html element that will be inserted into the JS scripts into your &lt;head&gt; tag.
+	 *
+	 * @param HtmlElementInterface $jsElement
+	 */
+	public function setJsElement(HtmlElementInterface $jsElement) {
+		$this->jsElement = $jsElement;
+		return $this;
+	}
+	
+	/**
+	 * A custom CSS element that will be inserted into the JS scripts into your &lt;head&gt; tag.
+	 * @param HtmlElementInterface $cssElement
+	 */
+	public function setCssElement(HtmlElementInterface $cssElement) {
+		$this->cssElement = $cssElement;
+		return $this;
+	}
+	
+	/**
+	 * A custom Html element that will be inserted into the additional scripts into your &lt;head&gt; tag.
+	 * The content of this file is displayed BELOW JS and CSS inclusion.
+	 *
+	 * @param HtmlElementInterface $additionalElement
+	 */
+	public function setAdditionalElement(HtmlElementInterface $additionalElement) {
+		$this->additionalElement = $additionalElement;
+		return $this;
+	}
 	
     /**
      * Returns an array of Javascript files to be included for this library.
@@ -82,69 +124,6 @@ class InlineWebLibrary implements WebLibraryInterface, WebLibraryRendererInterfa
     }
     
     /**
-     * Returns the renderer class in charge of outputing the HTML that will load CSS ans JS files.
-     *
-     * @return WebLibraryRendererInterface
-     */
-    public function getRenderer() {
-    	return $this;
-    }
-    
-    /**
-     * Renders the CSS part of a web library.
-     *
-     * @param WebLibraryInterface $webLibrary
-     */
-    function toCssHtml(WebLibraryInterface $webLibrary) {
-    	if ($this->cssElement) {
-// 	   		$fileName = ROOT_PATH.$this->cssPhpFile;
-	
-// 	    	if ($this->scope != null) {
-// 	    		$this->scope->loadFile($fileName);
-// 	    	} else {
-// 	    		require $fileName;
-// 	    	}
-			$this->cssElement->toHtml();
-    	}
-    }
-    
-    /**
-     * Renders the JS part of a web library.
-     *
-     * @param WebLibraryInterface $webLibrary
-     */
-    function toJsHtml(WebLibraryInterface $webLibrary) {
-    	if ($this->jsElement) {
-// 	    	$fileName = ROOT_PATH.$this->jsPhpFile;
-	
-// 	    	if ($this->scope != null) {
-// 	    		$this->scope->loadFile($fileName);
-// 	    	} else {
-// 	    		require $fileName;
-// 	    	}
-			$this->jsElement->toHtml();
-    	}
-    }
-    
-    /**
-     * Renders any additional HTML that should be outputed below the JS and CSS part.
-     *
-     * @param WebLibraryInterface $webLibrary
-     */
-    function toAdditionalHtml(WebLibraryInterface $webLibrary) {
-    	if ($this->additionalElement) {
-// 	    	$fileName = ROOT_PATH.$this->additionalPhpFile;
-	
-// 	    	if ($this->scope != null) {
-// 	    		$this->scope->loadFile($fileName);
-// 	    	} else {
-// 	    		require $fileName;
-// 	    	}
-			$this->additionalElement->toHtml();
-    	}
-    }
-    
-    /**
      * Sets the script outputed in the JS section
      * @param string $script
      */
@@ -172,7 +151,6 @@ class InlineWebLibrary implements WebLibraryInterface, WebLibraryRendererInterfa
     	$this->cssElement = new HtmlString($css);
     }
     
-    
     /**
      * Sets the script outputed in the CSS section
      * 
@@ -192,7 +170,6 @@ class InlineWebLibrary implements WebLibraryInterface, WebLibraryRendererInterfa
     	$this->additionalElement = new HtmlString($script);
     }
     
-    
     /**
      * Sets the additional items outputed below the JS and CSS sections
      *
@@ -203,6 +180,31 @@ class InlineWebLibrary implements WebLibraryInterface, WebLibraryRendererInterfa
     function setAdditionalElementFromFile($filename, $scope = null, $relativeToRootPath = true){
     	$this->additionalElement = new HtmlFromFile($filename, $scope, $relativeToRootPath);
     }
-    
+	
+	/**
+	 * A custom Html element that will be inserted into the JS scripts into your &lt;head&gt; tag.
+	 * @return the HtmlElementInterface
+	 */
+	public function getJsElement() {
+		return $this->jsElement;
+	}
+	
+	/**
+	 * A custom CSS element that will be inserted into the JS scripts into your &lt;head&gt; tag.
+	 * @return the HtmlElementInterface
+	 */
+	public function getCssElement() {
+		return $this->cssElement;
+	}
+	
+	/**
+	 * A custom Html element that will be inserted into the additional scripts into your &lt;head&gt; tag.
+	 * The content of this file is displayed BELOW JS and CSS inclusion.
+	 * @return the HtmlElementInterface
+	 */
+	public function getAdditionalElement() {
+		return $this->additionalElement;
+	}
+	
 }
 ?>

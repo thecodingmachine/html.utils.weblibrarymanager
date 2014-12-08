@@ -8,7 +8,6 @@ namespace Mouf\Html\Utils\WebLibraryManager;
  * to install the library and bind it to the default webLibraryManager.</p>
  * 
  * @author David Négrier
- * @Component
  */
 use Mouf\MoufManager;
 
@@ -37,9 +36,6 @@ class WebLibraryInstaller {
 		$library->getProperty("jsFiles")->setValue($jsFiles);
 		$library->getProperty("cssFiles")->setValue($cssFiles);
 		
-		$renderer = $moufManager->getInstanceDescriptor('defaultWebLibraryRenderer');
-		$library->getProperty("renderer")->setValue($renderer);
-		
 		$dependenciesInstances = array();
 		foreach ($dependencies as $dependencyName) {
 			$dependenciesInstances[] = $moufManager->getInstanceDescriptor($dependencyName);
@@ -50,14 +46,13 @@ class WebLibraryInstaller {
 		if ($bindToWebLibraryManager) {
 			$webLibraryManager = $moufManager->getInstanceDescriptor('defaultWebLibraryManager');
 			if ($webLibraryManager) {
-				$libraries = $webLibraryManager->getProperty("webLibraries")->getValue();
+				$libraries = $webLibraryManager->getSetterProperty("webLibraries")->getValue();
 				if (array_search($library, $libraries) === false) {
 					$libraries[] = $library;
-					$webLibraryManager->getProperty("webLibraries")->setValue($libraries);
+					$webLibraryManager->getSetterProperty("webLibraries")->setValue($libraries);
 				}
 			}
 		}
 		
 	}
 }
-?>

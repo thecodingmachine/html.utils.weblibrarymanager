@@ -38,11 +38,4 @@ interface WebLibraryInterface {
 	 * @return array<string>
 	 */
 	public function getFeatures();
-	
-	/**
-	 * Returns the renderer class in charge of outputing the HTML that will load CSS ans JS files.
-	 *
-	 * @return WebLibraryRendererInterface
-	 */
-	public function getRenderer();
 }

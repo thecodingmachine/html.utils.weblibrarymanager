@@ -19,7 +19,8 @@
 		}
 	],
 	"require" : {
-		"php" : ">=5.3.0",
+		"php" : ">=5.4.0",
+		"mouf/html.renderer" : "~1.0",
 		"mouf/mouf-installer" : "~2.0",
 		"mouf/html.htmlelement" : "~2.0",
 		"mouf/html.utils.weblibrarymanager.component-installer" : "2.1.*"
@@ -32,8 +33,8 @@
 	"extra" : {
 		"mouf" : {
 			"install" : [{
-					"type" : "file",
-					"file" : "install.php"
+					"type" : "class",
+					"class" : "Mouf\\Html\\Utils\\WebLibraryManager\\WebLibraryManagerInstaller"
 				}
 			],
 			"require-admin" : [
