@@ -22,8 +22,8 @@ class WebLibraryInstaller {
 	 * @param bool $bindToWebLibraryManager Whether we should bind the declared weblibrary directly in the defaultWebLibraryManager or not.
 	 * @param MoufManager $moufManager The moufManager to be used for installation (defaults to default mouf manager)
 	 */
-	public static function installLibrary($instanceName, array $jsFiles, array $cssFiles = array(), array $dependencies = array(), $bindToWebLibraryManager = true, $moufManager = null) {
-		if ($moufManager == null) {
+	public static function installLibrary($instanceName, array $jsFiles, array $cssFiles = array(), array $dependencies = array(), $bindToWebLibraryManager = true, MoufManager $moufManager = null) {
+		if ($moufManager === null) {
 			$moufManager = MoufManager::getMoufManager();
 		}
 		

@@ -6,7 +6,6 @@ use Mouf\Composer\ComposerService;
 use Mouf\Validator\MoufValidatorResult;
 use Mouf\MoufManager;
 use Mouf\Mvc\Splash\Controllers\Controller;
-use Mouf\Html\Utils\WebLibraryManager\WebLibraryInstaller;
 use Mouf\Html\Utils\WebLibraryManager\ComponentInstaller\ComponentInstaller;
 use Mouf\ClassProxy;
 
@@ -47,7 +46,6 @@ class ComponentsIntegrationController extends Controller implements MoufStaticVa
 		$composerService = new ComposerService();
 		$packages = $composerService->getLocalPackagesOrderedByDependencies();
 		
-		$violations = array();
 		$moufManager = MoufManager::getMoufManager();
 		
 		foreach ($packages as $package) {

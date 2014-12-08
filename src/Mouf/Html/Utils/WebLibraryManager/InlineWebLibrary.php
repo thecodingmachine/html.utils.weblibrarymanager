@@ -1,13 +1,11 @@
 <?php
 namespace Mouf\Html\Utils\WebLibraryManager;
+
 use Mouf\Html\HtmlElement\HtmlFromFile;
-
 use Mouf\Html\HtmlElement\HtmlString;
-
 use Mouf\Html\HtmlElement\HtmlElementInterface;
 use Mouf\Html\HtmlElement\Scopable;
 use Mouf\Html\Utils\WebLibraryManager\WebLibraryInterface;
-use Mouf\Html\Utils\WebLibraryManager\WebLibraryRendererInterface;
 
 /**
  * This class can be used to insert JS or CSS directly into the &lt;head&gt; tag (inline).

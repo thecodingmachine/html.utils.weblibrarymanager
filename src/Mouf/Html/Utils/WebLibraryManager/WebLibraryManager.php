@@ -1,7 +1,6 @@
 <?php 
 namespace Mouf\Html\Utils\WebLibraryManager;
 
-use Mouf\MoufManager;
 use Mouf\Html\HtmlElement\HtmlElementInterface;
 use Mouf\Html\Renderer\RendererInterface;
 
@@ -96,8 +95,6 @@ class WebLibraryManager implements HtmlElementInterface {
 		/*if ($this->rendered) {
 			throw new WebLibraryException("The library has already been rendered.");
 		}*/
-		
-		$defaultWebLibraryRenderer = null;
 		
 		foreach ($this->webLibraries as $library) {
 			$this->renderer->render($library, 'css');
