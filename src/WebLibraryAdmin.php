@@ -15,3 +15,6 @@ $moufManager = MoufManager::getMoufManager();
 $moufManager->declareComponent('componentsIntegration', 'Mouf\\Html\\Utils\\WebLibraryManager\\Components\\ComponentsIntegrationController', true);
 $moufManager->bindComponents('componentsIntegration', 'template', 'moufTemplate');
 $moufManager->bindComponents('componentsIntegration', 'content', 'block.content');
+$moufManager->declareComponent('bowerIntegration', 'Mouf\\Html\\Utils\\WebLibraryManager\\Bower\\BowerIntegrationController', true);
+$moufManager->bindComponents('bowerIntegration', 'template', 'moufTemplate');
+$moufManager->bindComponents('bowerIntegration', 'content', 'block.content');
