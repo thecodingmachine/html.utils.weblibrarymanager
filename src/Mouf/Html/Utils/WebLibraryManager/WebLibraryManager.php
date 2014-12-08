@@ -70,9 +70,7 @@ class WebLibraryManager implements HtmlElementInterface {
 			$this->webLibraries[] = $library;
 		}
 	}
-	
-	// TODO: add: addJs and addCss file
-	
+		
 	/**
 	 * The list of all libraries that should be loaded in the web page.
 	 * <p>If you do not pass all dependencies of a library, the dependencies will be loaded automatically.</p>
@@ -109,5 +107,27 @@ class WebLibraryManager implements HtmlElementInterface {
 		}
 		
 		$this->rendered = true;
+	}
+
+	/**
+	 * Adds a single JS file to the list of files to be included in the &lt;head&gt; tag.
+	 * <p>If you don't specify http:// or https:// and if the file does not start with /, the file is considered to be relative to ROOT_URL.</p>
+	 * <div class="info">It is a good practice to make sure the file does not start with /, http:// or https:// (unless you are using a CDN).</div>
+	 * 
+	 * @param string $jsFile
+	 */
+	public function addJsFile($jsFile) {
+		$this->webLibraries[] = new WebLibrary([$jsFile]);
+	}
+	
+	/**
+	 * Adds a single CSS file to the list of files to be included in the &lt;head&gt; tag.
+	 * <p>If you don't specify http:// or https:// and if the file does not start with /, the file is considered to be relative to ROOT_URL.</p>
+	 * <div class="info">It is a good practice to make sure the file does not start with /, http:// or https:// (unless you are using a CDN).</div>
+	 *
+	 * @param string $cssFile
+	 */
+	public function addCssFile($cssFile) {
+		$this->webLibraries[] = new WebLibrary([], [$cssFile]);
 	}
 }

@@ -11,7 +11,7 @@ class WebLibrary implements WebLibraryInterface {
 	
 	/**
 	 * List of JS files to add in header.
-     * If you don't specify http:// or https://, the file is considered to be relative to ROOT_URL.
+     * If you don't specify http:// or https:// and if your URL does not start with /, the file is considered to be relative to ROOT_URL.
      * 
 	 * @var array<string>
 	 */
@@ -19,7 +19,7 @@ class WebLibrary implements WebLibraryInterface {
 
 	/**
 	 * List of CSS files to add in header.
-	 * If you don't specify http:// or https://, the file is considered to be relative to ROOT_URL.
+	 * If you don't specify http:// or https:// and if your URL does not start with /, the file is considered to be relative to ROOT_URL.
 	 *
 	 * @var array<string>
 	 */
@@ -36,8 +36,8 @@ class WebLibrary implements WebLibraryInterface {
 	/**
 	 * Constructor
 	 * 
-	 * @param array<string> $jsFiles
-	 * @param array<string> $cssFiles
+	 * @param string[] $jsFiles List of JS files to add in header. If you don't specify http:// or https:// and if your URL does not start with /, the file is considered to be relative to ROOT_URL.
+	 * @param string[] $cssFiles List of CSS files to add in header. If you don't specify http:// or https:// and if your URL does not start with /, the file is considered to be relative to ROOT_URL.
 	 */
 	
 	public function __construct($jsFiles = array(), $cssFiles = array() ) {
