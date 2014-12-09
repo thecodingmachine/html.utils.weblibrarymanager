@@ -3,6 +3,7 @@ namespace Mouf\Html\Utils\WebLibraryManager;
 
 use Mouf\Html\HtmlElement\HtmlElementInterface;
 use Mouf\Html\Renderer\RendererInterface;
+use Mouf\Html\HtmlElement\HtmlString;
 
 /**
  * This class is in charge of including and keeping track of Javascript and CSS libraries into an HTML page.
@@ -129,5 +130,20 @@ class WebLibraryManager implements HtmlElementInterface {
 	 */
 	public function addCssFile($cssFile) {
 		$this->webLibraries[] = new WebLibrary([], [$cssFile]);
+	}
+	
+	// TODO: add additional scripts
+	
+	/**
+	 * Adds an additional script at the end of the &lt;head&gt; tag.
+	 * The provided script can either be a string or an object implementing HtmlElementInterface.
+	 * 
+	 * @param string|HtmlElementInterface $additionalScript
+	 */
+	public function addAdditionalScript($additionalScript) {
+		if (!$additionalScript instanceof HtmlElementInterface) {
+			$additionalScript = new HtmlString($additionalScript);
+		}
+		$this->webLibraries[] = new InlineWebLibrary(null, null, $additionalScript);
 	}
 }

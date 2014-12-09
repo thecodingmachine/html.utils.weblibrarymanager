@@ -46,21 +46,109 @@ Still want to install it manually? Use the packagist package:
 }
 ```
 
-Adding a new WebLibrary
------------------------
+Getting an instance of WebLibraryManager
+----------------------------------------
+
+Most of the time, you will be using `WebLibraryManager` through a Mouf template.
+You can simply get an instance of the `WebLibraryManager` from the template:
+
+```php
+class MyController {
+	/**
+	 * @var $template TemplateInterface
+	 */
+	protected $template;
+
+	...
+	
+	public function myAction() {
+		$webLibraryManager = $this->template->getWebLibraryManager();
+		...
+	}
+}
+```
+
+You can also directly instanciate the webLibraryManager using Mouf (although it is not recommended
+since that would be using Mouf as a service locator instead of a DI container):
+
+```php
+$webLibraryManager = Mouf::getDefaultWebLibraryManager();
+...
+``` 
+
+
+Adding a JS or CSS file programmatically
+----------------------------------------
+The most trivial use of the WebLibraryManager is adding a JS or CSS file to your web page.
+To do this, you simply write:
+
+```php
+// Import a JS file from your project
+// The file is relative to your ROOT_URL
+$webLibraryManager->addJsFile('src/javascript/myJsFile.js');
+
+// Import a JS file from a CDN
+$webLibraryManager->addJsFile('https://code.jquery.com/jquery-2.1.1.min.js');
+```
+
+```php
+// Import a CSS file from your project
+// The file is relative to your ROOT_URL
+$webLibraryManager->addCssFile('src/css/myStyle.css');
+```
+
+<div class="alert alert-info">When you include a file, if the file does NOT start with a '/', it is relative to your root URL.
+If the file start with a '/', it is absolute.</div>
+
+You can add any kind of script at the end of the &lt;head&gt; tag using:
+
+```php
+$webLibraryManager->addAdditionalScript('<script>alert("Hello world!")</script>');
+```
+
+
+You can also declare a complete `WebLibrary` object and add it.
+
+```php
+$webLibrary = new WebLibrary(
+	["javascript/file1.js", "javascript/file2.js"],
+	["css/style1.css", "css/style2.css"]);
+
+$webLibraryManager->addLibrary($webLibrary);
+```
+
+This codes create a new *WebLibrary* and adds it to the *WebLibraryManager*.
+The *WebLibrary* takes an array of Javascript files as first argument, and an array
+of CSS files as second argument.
+
+Alternatively, if you want to add some CSS styles or Javascript scripts (or anything else) to your &lt;head&gt; tag,
+you can simply use the `InlineWebLibrary` class that let's you add what you want in the JS, CSS or additional part
+of your template.
+
+Outputing the result
+--------------------
+
+Simply use the `toHtml()` method to output the content of the `WebLibraryManager`:
+
+```php
+$webLibraryManager->toHtml();
+```
+
+This call is usually performed by your template.
+
+TODO: explain the structure: CSS first, then JS, then additional.
+
+Adding a new WebLibrary by configuration
+----------------------------------------
 ###Using Mouf user interface
 
 TODO: screenshot
 
-###Using code
-
-TODO:
-- from a controller
-- from anywhere (Mouf::getDefaultWebLibraryManager()->... (not recommended))
 
 
 Writing your own WebLibraries
 -----------------------------
+If you have specific needs, the ...
 
 TODO: explain the rendering system. 
 
@@ -83,4 +171,15 @@ status page and will offer a button to create those missing instances automatica
 
 Support for Bower packages
 --------------------------
-TODO
+
+Thanks to the marvelous [composer-asset-plugin libray](http://github.com/francoispluchino/composer-asset-plugin), we can now include
+Bower assets (so basically any modern Javascript library) directly into Composer dependencies.
+
+The **WebLibraryManager** has a built in support for these bower assets. When you insert new bower assets
+in your `composer.json` file, the WebLibraryManager will detect those packages and automatically create the 
+**WebLibrary** instances matching those packages.
+
+Note: the included JS and CSS files are based on the "main" attribute declared in the `bower.json` file of the package. 
+
+Note: if you import these packages _before_ installing the WebLibraryManager, Mouf will detect the missing instances on the
+status page and will offer a button to create those missing instances automatically.
