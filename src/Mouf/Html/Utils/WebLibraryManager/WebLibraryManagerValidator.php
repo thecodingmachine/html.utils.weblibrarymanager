@@ -5,9 +5,6 @@ use Mouf\Validator\MoufStaticValidatorInterface;
 use Mouf\Composer\ComposerService;
 use Mouf\Validator\MoufValidatorResult;
 use Mouf\MoufManager;
-use Mouf\Mvc\Splash\Controllers\Controller;
-use Mouf\Html\Utils\WebLibraryManager\ComponentInstaller\ComponentInstaller;
-use Mouf\ClassProxy;
 
 /**
  * This validator is in charge of checking that "component" and "bower" packages have matching weblibraries 
