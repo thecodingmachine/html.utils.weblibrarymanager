@@ -46,5 +46,6 @@
 				"url" : "doc/CHANGELOG.md"
 			}]
 		}
-	}
+	},
+	"minimum-stability" : "dev"
 }
