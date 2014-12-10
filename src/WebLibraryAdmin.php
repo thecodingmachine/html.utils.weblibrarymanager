@@ -8,13 +8,10 @@
 use Mouf\MoufManager;
 
 // Force loading our controller instead of the one provided by Mouf.
-require_once __DIR__.'/Mouf/Html/Utils/WebLibraryManager/Components/ComponentsIntegrationController.php';
+require_once __DIR__.'/Mouf/Html/Utils/WebLibraryManager/AssetsIntegrationController.php';
 
 // Controller declaration
 $moufManager = MoufManager::getMoufManager();
-$moufManager->declareComponent('componentsIntegration', 'Mouf\\Html\\Utils\\WebLibraryManager\\Components\\ComponentsIntegrationController', true);
-$moufManager->bindComponents('componentsIntegration', 'template', 'moufTemplate');
-$moufManager->bindComponents('componentsIntegration', 'content', 'block.content');
-$moufManager->declareComponent('bowerIntegration', 'Mouf\\Html\\Utils\\WebLibraryManager\\Bower\\BowerIntegrationController', true);
-$moufManager->bindComponents('bowerIntegration', 'template', 'moufTemplate');
-$moufManager->bindComponents('bowerIntegration', 'content', 'block.content');
+$moufManager->declareComponent('assetsIntegration', 'Mouf\\Html\\Utils\\WebLibraryManager\\AssetsIntegrationController', true);
+$moufManager->bindComponents('assetsIntegration', 'template', 'moufTemplate');
+$moufManager->bindComponents('assetsIntegration', 'content', 'block.content');

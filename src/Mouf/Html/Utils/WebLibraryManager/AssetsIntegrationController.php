@@ -1,0 +1,44 @@
+<?php
+namespace Mouf\Html\Utils\WebLibraryManager;
+
+use Mouf\Validator\MoufStaticValidatorInterface;
+use Mouf\Composer\ComposerService;
+use Mouf\Validator\MoufValidatorResult;
+use Mouf\MoufManager;
+use Mouf\Mvc\Splash\Controllers\Controller;
+use Mouf\Html\Utils\WebLibraryManager\BowerInstaller\BowerInstaller;
+use Mouf\ClassProxy;
+
+/**
+ * This controller is called by the validator in order to fix all bower / components packages if needed.
+ * 
+ * @author David Négrier
+ */
+class AssetsIntegrationController extends Controller {
+	
+	/**
+	 *
+	 * @var HtmlBlock
+	 */
+	public $content;
+	
+	/**
+	 * The template used by the main page for mouf.
+	 *
+	 * @var TemplateInterface
+	 */
+	public $template;
+	
+	/**
+	 * @Action
+	 */
+	public function fixAll() {
+		$componentsIntegrationController = new ClassProxy("Mouf\\Html\\Utils\\WebLibraryManager\\Components\\ComponentsIntegrationService");
+		$componentsIntegrationController->fixAllInAppScope();
+		
+		$bowerIntegrationController = new ClassProxy("Mouf\\Html\\Utils\\WebLibraryManager\\Bower\\BowerIntegrationService");
+		$bowerIntegrationController->fixAllInAppScope();
+		
+		header('Location: '.MOUF_URL);
+	}
+}
