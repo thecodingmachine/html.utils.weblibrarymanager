@@ -5,7 +5,7 @@
  * See the file LICENSE.txt for copying permission.
  */
 
-namespace Mouf\Utils\Log\Psr;
+namespace Mouf\Html\Utils\WebLibraryManager;
 
 use Mouf\Installer\PackageInstallerInterface;
 use Mouf\MoufManager;
@@ -30,7 +30,6 @@ class WebLibraryManagerInstaller implements PackageInstallerInterface {
 				if (!$moufManager->instanceExists("rootUrlJsFile")) {
 					$rootUrlJsFile = $moufManager->createInstance("Mouf\\Html\\HtmlElement\\HtmlFromFile");
 					$rootUrlJsFile->setName("rootUrlJsFile");
-					//$rootUrlJsFile->getProperty("fileName")->setValue(MoufUtils::getUrlPathFromFilePath(__DIR__."/javascript/rootUrl.php"), true);
 					$rootUrlJsFile->getProperty("fileName")->setValue("vendor/mouf/html.utils.weblibrarymanager/javascript/rootUrl.php");
 				} else {
 					$rootUrlJsFile = $moufManager->getInstanceDescriptor("rootUrlJsFile");
@@ -46,7 +45,7 @@ class WebLibraryManagerInstaller implements PackageInstallerInterface {
 			$defaultWebLibraryManager = $moufManager->getInstanceDescriptor('defaultWebLibraryManager');
 		}
 
-		if ($moufManager->has("defaultRenderer") && $defaultWebLibraryManager->getConstructorArgumentProperty("renderer")->getValue() == null) {
+		if ($moufManager->has("defaultRenderer") && $defaultWebLibraryManager->getConstructorArgumentProperty("renderer")->getValue() === null) {
 			$defaultWebLibraryManager->getConstructorArgumentProperty("renderer")->setValue($moufManager->getInstanceDescriptor('defaultRenderer'));
 		}
 		

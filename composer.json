@@ -40,7 +40,12 @@
 			],
 			"require-admin" : [
 				"src/WebLibraryAdmin.php"
-			]
+			],
+			"doc" : [{
+				"title" : "CHANGELOG",
+				"url" : "doc/CHANGELOG.md"
+			}]
 		}
-	}
+	},
+	"minimum-stability" : "dev"
 }

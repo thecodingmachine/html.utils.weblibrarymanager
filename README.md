@@ -1,6 +1,14 @@
 WebLibraryManager: a PHP class to manage Javascript/CSS dependencies in your project
 ====================================================================================
 
+Tutorial
+--------
+
+If you need a nice introduction to managing JS/CSS files with Mouf, read the [JS/CSS introduction of the "getting things done with mouf" project](http://mouf-php.com/packages/mouf/getting-things-done-basic-edition/doc/adding_js_and_css_files.md).
+
+Introduction
+------------
+
 WebLibraryManager is a [Mouf package](http://mouf-php.com) that allows you to import CSS/Javascript in your project the simple way.
 
 You can use it without Mouf, but most of the time, you will use Mouf and its install process to get quickly started.
@@ -136,21 +144,50 @@ $webLibraryManager->toHtml();
 
 This call is usually performed by your template.
 
-TODO: explain the structure: CSS first, then JS, then additional.
+The WebLibraryManager will group its output in 3 categories:
+
+- CSS declarations go first
+- Then JS file declarations
+- And finally anything else (usually JS scripts directly put in the web page) 
 
 Adding a new WebLibrary by configuration
 ----------------------------------------
-###Using Mouf user interface
+The _WebLibraryManager_ comes with a default instance *defaultWebLibraryManager*, that is used by the template.
 
-TODO: screenshot
+![Web library manager instance](doc/images/defaultWebLibraryManager.png)
 
+You just need to add a new *WebLibrary* to the instance list.
 
+Then, edit this weblibrary, and add the JS and CSS files you want to include.
+
+![Web library instance](doc/images/weblibrary.png)
+
+<div class="alert">_Note:_ Do not start the JS or CSS file path with a /. That way, the path is relative to the
+ROOT_URL (the root of your web application). You can also enter a full path (http://...) if you want to
+use hosted libraries, CDN, etc...</div>
 
 Writing your own WebLibraries
 -----------------------------
-If you have specific needs, the ...
+If you have specific needs, the WebLibrary class might not be enough.
+For instance, you might want to output something else than &lt;script&gt; tags.
 
-TODO: explain the rendering system. 
+For these use-cases, you can write a class that implement the `WebLibraryInterface` interface.
+Since the WebLibraryManager uses Mouf's rendering system, you will need to provide a template for
+your class with 3 different contexts: "js", "css" and "additional".
+
+Here is a simple sample:
+
+The [`GoogleAnalyticsWebLibrary`](https://github.com/thecodingmachine/modules.google-analytics/blob/4.0/src/Mouf/Modules/GoogleAnalytics/GoogleAnalyticsWebLibrary.php#L16)
+is a simple class that will output Javascript required by Google Analytics.
+This class contains almost nothing except the 2 properties required (`accountKey` and `domainName`).
+
+Rendering is performed by the 3 templates here:
+
+- [JS template](https://github.com/thecodingmachine/modules.google-analytics/blob/4.0/src/templates/Mouf/Modules/GoogleAnalytics/GoogleAnalyticsWebLibrary__js.php) is empty
+- [CSS template](https://github.com/thecodingmachine/modules.google-analytics/blob/4.0/src/templates/Mouf/Modules/GoogleAnalytics/GoogleAnalyticsWebLibrary__css.php) is empty
+- [Additional template](https://github.com/thecodingmachine/modules.google-analytics/blob/4.0/src/templates/Mouf/Modules/GoogleAnalytics/GoogleAnalyticsWebLibrary__additional.php) contains the Google Analytics code.
+
+Because the Google Analytics tracking code is in the "additional" section, it will be displayed after all CSS and JS files are loaded.
 
 
 Support for Rob Loach's components
