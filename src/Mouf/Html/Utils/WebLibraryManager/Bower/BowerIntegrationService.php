@@ -1,13 +1,9 @@
 <?php
 namespace Mouf\Html\Utils\WebLibraryManager\Bower;
 
-use Mouf\Validator\MoufStaticValidatorInterface;
 use Mouf\Composer\ComposerService;
-use Mouf\Validator\MoufValidatorResult;
 use Mouf\MoufManager;
-use Mouf\Mvc\Splash\Controllers\Controller;
 use Mouf\Html\Utils\WebLibraryManager\BowerInstaller\BowerInstaller;
-use Mouf\ClassProxy;
 
 /**
  * This controller is in charge of integrating Bower packages with the WebLibraryManager.

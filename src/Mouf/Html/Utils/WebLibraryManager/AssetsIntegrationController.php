@@ -1,12 +1,7 @@
 <?php
 namespace Mouf\Html\Utils\WebLibraryManager;
 
-use Mouf\Validator\MoufStaticValidatorInterface;
-use Mouf\Composer\ComposerService;
-use Mouf\Validator\MoufValidatorResult;
-use Mouf\MoufManager;
 use Mouf\Mvc\Splash\Controllers\Controller;
-use Mouf\Html\Utils\WebLibraryManager\BowerInstaller\BowerInstaller;
 use Mouf\ClassProxy;
 
 /**
