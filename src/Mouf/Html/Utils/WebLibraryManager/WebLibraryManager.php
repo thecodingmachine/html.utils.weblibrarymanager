@@ -132,8 +132,6 @@ class WebLibraryManager implements HtmlElementInterface {
 		$this->webLibraries[] = new WebLibrary([], [$cssFile]);
 	}
 	
-	// TODO: add additional scripts
-	
 	/**
 	 * Adds an additional script at the end of the &lt;head&gt; tag.
 	 * The provided script can either be a string or an object implementing HtmlElementInterface.
