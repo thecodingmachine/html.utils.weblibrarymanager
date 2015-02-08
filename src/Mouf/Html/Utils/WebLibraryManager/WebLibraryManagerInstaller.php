@@ -7,6 +7,7 @@
 
 namespace Mouf\Html\Utils\WebLibraryManager;
 
+use Mouf\Html\Utils\WebLibraryManager\Components\ComponentsIntegrationService;
 use Mouf\Installer\PackageInstallerInterface;
 use Mouf\MoufManager;
 use Mouf\Html\Renderer\RendererUtils;
@@ -51,7 +52,10 @@ class WebLibraryManagerInstaller implements PackageInstallerInterface {
 		
 		
 		RendererUtils::createPackageRenderer($moufManager, "mouf/html.utils.weblibrarymanager");
-		
+
+		// Let's register all "components" based libraries that have not been registered so far:
+		ComponentsIntegrationService::fixAllInAppScope();
+
 		// Let's rewrite the MoufComponents.php file to save the component
 		$moufManager->rewriteMouf();
 	}
