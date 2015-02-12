@@ -1,3 +1,9 @@
+[![Latest Stable Version](https://poser.pugx.org/mouf/html.utils.weblibrarymanager/v/stable.svg)](https://packagist.org/packages/mouf/html.utils.weblibrarymanager)
+[![Total Downloads](https://poser.pugx.org/mouf/html.utils.weblibrarymanager/downloads.svg)](https://packagist.org/packages/mouf/html.utils.weblibrarymanager)
+[![Latest Unstable Version](https://poser.pugx.org/mouf/html.utils.weblibrarymanager/v/unstable.svg)](https://packagist.org/packages/mouf/html.utils.weblibrarymanager)
+[![License](https://poser.pugx.org/mouf/html.utils.weblibrarymanager/license.svg)](https://packagist.org/packages/mouf/html.utils.weblibrarymanager)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/thecodingmachine/html.utils.weblibrarymanager/badges/quality-score.png?b=3.1)](https://scrutinizer-ci.com/g/thecodingmachine/html.utils.weblibrarymanager/?branch=3.1)
+
 WebLibraryManager: a PHP class to manage Javascript/CSS dependencies in your project
 ====================================================================================
 
@@ -49,8 +55,8 @@ Still want to install it manually? Use the packagist package:
 ```json
 {
     "require": {
-        "mouf/html.utils.weblibrarymanager": "~3.0"
-    } 
+        "mouf/html.utils.weblibrarymanager": "~3.1"
+    }
 }
 ```
 
@@ -68,7 +74,7 @@ class MyController {
 	protected $template;
 
 	...
-	
+
 	public function myAction() {
 		$webLibraryManager = $this->template->getWebLibraryManager();
 		...
@@ -82,7 +88,7 @@ since that would be using Mouf as a service locator instead of a DI container):
 ```php
 $webLibraryManager = Mouf::getDefaultWebLibraryManager();
 ...
-``` 
+```
 
 
 Adding a JS or CSS file programmatically
@@ -148,7 +154,7 @@ The WebLibraryManager will group its output in 3 categories:
 
 - CSS declarations go first
 - Then JS file declarations
-- And finally anything else (usually JS scripts directly put in the web page) 
+- And finally anything else (usually JS scripts directly put in the web page)
 
 Adding a new WebLibrary by configuration
 ----------------------------------------
