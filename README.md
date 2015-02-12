@@ -205,18 +205,3 @@ matching those packages.
 
 Note: if you import these packages _before_ installing the WebLibraryManager, Mouf will detect the missing instances on the
 status page and will offer a button to create those missing instances automatically.
-
-Support for Bower packages
---------------------------
-
-Thanks to the marvelous [composer-asset-plugin libray](http://github.com/francoispluchino/composer-asset-plugin), we can now include
-Bower assets (so basically any modern Javascript library) directly into Composer dependencies.
-
-The **WebLibraryManager** has a built in support for these bower assets. When you insert new bower assets
-in your `composer.json` file, the WebLibraryManager will detect those packages and automatically create the 
-**WebLibrary** instances matching those packages.
-
-Note: the included JS and CSS files are based on the "main" attribute declared in the `bower.json` file of the package. 
-
-Note: if you import these packages _before_ installing the WebLibraryManager, Mouf will detect the missing instances on the
-status page and will offer a button to create those missing instances automatically.

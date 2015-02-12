@@ -5,7 +5,7 @@ use Mouf\Mvc\Splash\Controllers\Controller;
 use Mouf\ClassProxy;
 
 /**
- * This controller is called by the validator in order to fix all bower / components packages if needed.
+ * This controller is called by the validator in order to fix all components packages if needed.
  * 
  * @author David Négrier
  */
@@ -30,9 +30,6 @@ class AssetsIntegrationController extends Controller {
 	public function fixAll() {
 		$componentsIntegrationController = new ClassProxy("Mouf\\Html\\Utils\\WebLibraryManager\\Components\\ComponentsIntegrationService");
 		$componentsIntegrationController->fixAllInAppScope();
-		
-		$bowerIntegrationController = new ClassProxy("Mouf\\Html\\Utils\\WebLibraryManager\\Bower\\BowerIntegrationService");
-		$bowerIntegrationController->fixAllInAppScope();
 		
 		header('Location: '.MOUF_URL);
 	}
