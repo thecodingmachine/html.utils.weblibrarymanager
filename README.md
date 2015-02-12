@@ -1,3 +1,9 @@
+[![Latest Stable Version](https://poser.pugx.org/mouf/html.utils.weblibrarymanager/v/stable.svg)](https://packagist.org/packages/mouf/html.utils.weblibrarymanager)
+[![Total Downloads](https://poser.pugx.org/mouf/html.utils.weblibrarymanager/downloads.svg)](https://packagist.org/packages/mouf/html.utils.weblibrarymanager)
+[![Latest Unstable Version](https://poser.pugx.org/mouf/html.utils.weblibrarymanager/v/unstable.svg)](https://packagist.org/packages/mouf/html.utils.weblibrarymanager)
+[![License](https://poser.pugx.org/mouf/html.utils.weblibrarymanager/license.svg)](https://packagist.org/packages/mouf/html.utils.weblibrarymanager)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/thecodingmachine/html.utils.weblibrarymanager/badges/quality-score.png?b=3.1)](https://scrutinizer-ci.com/g/thecodingmachine/html.utils.weblibrarymanager/?branch=3.1)
+
 WebLibraryManager: a PHP class to manage Javascript/CSS dependencies in your project
 ====================================================================================
 
@@ -49,8 +55,8 @@ Still want to install it manually? Use the packagist package:
 ```json
 {
     "require": {
-        "mouf/html.utils.weblibrarymanager": "~3.0"
-    } 
+        "mouf/html.utils.weblibrarymanager": "~3.1"
+    }
 }
 ```
 
@@ -68,7 +74,7 @@ class MyController {
 	protected $template;
 
 	...
-	
+
 	public function myAction() {
 		$webLibraryManager = $this->template->getWebLibraryManager();
 		...
@@ -82,7 +88,7 @@ since that would be using Mouf as a service locator instead of a DI container):
 ```php
 $webLibraryManager = Mouf::getDefaultWebLibraryManager();
 ...
-``` 
+```
 
 
 Adding a JS or CSS file programmatically
@@ -148,7 +154,7 @@ The WebLibraryManager will group its output in 3 categories:
 
 - CSS declarations go first
 - Then JS file declarations
-- And finally anything else (usually JS scripts directly put in the web page) 
+- And finally anything else (usually JS scripts directly put in the web page)
 
 Adding a new WebLibrary by configuration
 ----------------------------------------
@@ -202,21 +208,6 @@ For instance, have a look at the **component/jquery** package on Packagist.
 The **WebLibraryManager** has a built in support for these components. If you import one of those Composer packages
 in your project, the **WebLibraryManager** will detect these packages and will automatically create the **WebLibrary** instances
 matching those packages.
-
-Note: if you import these packages _before_ installing the WebLibraryManager, Mouf will detect the missing instances on the
-status page and will offer a button to create those missing instances automatically.
-
-Support for Bower packages
---------------------------
-
-Thanks to the marvelous [composer-asset-plugin libray](http://github.com/francoispluchino/composer-asset-plugin), we can now include
-Bower assets (so basically any modern Javascript library) directly into Composer dependencies.
-
-The **WebLibraryManager** has a built in support for these bower assets. When you insert new bower assets
-in your `composer.json` file, the WebLibraryManager will detect those packages and automatically create the 
-**WebLibrary** instances matching those packages.
-
-Note: the included JS and CSS files are based on the "main" attribute declared in the `bower.json` file of the package. 
 
 Note: if you import these packages _before_ installing the WebLibraryManager, Mouf will detect the missing instances on the
 status page and will offer a button to create those missing instances automatically.

@@ -7,7 +7,7 @@ use Mouf\Validator\MoufValidatorResult;
 use Mouf\MoufManager;
 
 /**
- * This validator is in charge of checking that "component" and "bower" packages have matching weblibraries 
+ * This validator is in charge of checking that "component" packages have matching weblibraries
  * declared in Mouf.
  * 
  * @author David Négrier
@@ -25,7 +25,6 @@ class WebLibraryManagerValidator implements MoufStaticValidatorInterface {
 		$packages = $composerService->getLocalPackagesOrderedByDependencies();
 		
 		$componentViolations = array();
-		$bowerViolations = array();
 		$moufManager = MoufManager::getMoufManager();
 		
 		foreach ($packages as $package) {
@@ -42,19 +41,13 @@ class WebLibraryManagerValidator implements MoufStaticValidatorInterface {
 				if (!$moufManager->has("component.".$packageName)) {
 					$componentViolations[] = $packageName;
 				}
-			} elseif ($package->getType() == "bower-asset-library") {
-				$packageName = explode('/', $package->getName())[1];
-				
-				if (!$moufManager->has("bower.".$packageName)) {
-					$bowerViolations[] = $packageName;
-				}
 			}
 		}
 
-		if (!$componentViolations && !$bowerViolations) {
+		if (!$componentViolations) {
 			return new MoufValidatorResult(MoufValidatorResult::SUCCESS, "<b>WebLibraryManager: </b>No missing WebLibrary for Bower or Components packages.");
 		} else {
-			return new MoufValidatorResult(MoufValidatorResult::ERROR, "<b>WebLibraryManager: </b>Missing matching WebLibrary for package(s) ".implode(', ', array_merge($componentViolations, $bowerViolations)).
+			return new MoufValidatorResult(MoufValidatorResult::ERROR, "<b>WebLibraryManager: </b>Missing matching WebLibrary for package(s) ".implode(', ', $componentViolations).
 				"<div><a href='".MOUF_URL."assetsIntegration/fixAll' class='btn btn-success'>Click here to create all web-libraries matching these packages</a></div>");
 		}
 	}
