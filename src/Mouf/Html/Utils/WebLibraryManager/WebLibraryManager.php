@@ -20,10 +20,6 @@ use Mouf\Html\HtmlElement\HtmlElementInterface;
  * @Component
  */
 class WebLibraryManager implements HtmlElementInterface {
-    const CSS = 'css';
-    const JS = 'js';
-    const ADDITIONAL = 'additional';
-
     /**
      * The array of all included libraries.
      *
@@ -89,7 +85,7 @@ class WebLibraryManager implements HtmlElementInterface {
         }*/
 
         $this->toCss();
-        $this->toHtml();
+        $this->toJs();
         $this->toAdditional();
 
         $this->rendered = true;
