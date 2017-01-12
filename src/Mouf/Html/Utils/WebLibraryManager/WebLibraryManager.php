@@ -20,9 +20,6 @@ use Mouf\Html\HtmlElement\HtmlElementInterface;
  * @Component
  */
 class WebLibraryManager implements HtmlElementInterface {
-    const CSS = 'css';
-    const JS = 'js';
-    const ADDITIONAL = 'additional';
 
     /**
      * The array of all included libraries.
@@ -82,56 +79,92 @@ class WebLibraryManager implements HtmlElementInterface {
      * This function should be called within the head tag.
      *
      */
-    public function toHtml($type = null)
+    public function toHtml()
     {
         /*if ($this->rendered) {
             throw new WebLibraryException("The library has already been rendered.");
         }*/
 
-        $defaultWebLibraryRenderer = null;
-
-        if (!$type || $type == WebLibraryManager::CSS) {
-            foreach ($this->webLibraries as $library) {
-                /* @var $library WebLibraryInterface */
-                $renderer = $library->getRenderer();
-                if ($renderer == null) {
-                    if ($defaultWebLibraryRenderer == null) {
-                        $defaultWebLibraryRenderer = MoufManager::getMoufManager()->getInstance(
-                            'defaultWebLibraryRenderer'
-                        );
-                    }
-                    $renderer = $defaultWebLibraryRenderer;
-                }
-                /* @var $renderer WebLibraryRendererInterface */
-                $renderer->toCssHtml($library);
-            }
-        }
-
-        if (!$type || $type == WebLibraryManager::JS) {
-            foreach ($this->webLibraries as $library) {
-                /* @var $library WebLibraryInterface */
-                $renderer = $library->getRenderer();
-                if ($renderer == null) {
-                    $renderer = $defaultWebLibraryRenderer;
-                }
-                /* @var $renderer WebLibraryRendererInterface */
-                $renderer->toJsHtml($library);
-            }
-        }
-
-        if (!$type || $type == WebLibraryManager::ADDITIONAL) {
-            foreach ($this->webLibraries as $library) {
-                /* @var $library WebLibraryInterface */
-                $renderer = $library->getRenderer();
-                if ($renderer == null) {
-                    $renderer = $defaultWebLibraryRenderer;
-                }
-                /* @var $renderer WebLibraryRendererInterface */
-                $renderer->toAdditionalHtml($library);
-            }
-        }
+        $this->cssToHtml();
+        $this->jsToHtml();
+        $this->additionalToHtml();
 
         $this->rendered = true;
+    }
+
+    /**
+     * Renders the HTML in charge of loading CSS files.
+     * The Html is echoed directly into the output.
+     *
+     */
+    public function cssToHtml()
+    {
+        $defaultWebLibraryRenderer = null;
+
+        foreach ($this->webLibraries as $library) {
+            /* @var $library WebLibraryInterface */
+            $renderer = $library->getRenderer();
+            if ($renderer == null) {
+                if ($defaultWebLibraryRenderer == null) {
+                    $defaultWebLibraryRenderer = MoufManager::getMoufManager()->getInstance(
+                        'defaultWebLibraryRenderer'
+                    );
+                }
+                $renderer = $defaultWebLibraryRenderer;
+            }
+            /* @var $renderer WebLibraryRendererInterface */
+            $renderer->toCssHtml($library);
+        }
+    }
+
+    /**
+     * Renders the HTML in charge of loading JS files.
+     * The Html is echoed directly into the output.
+     *
+     */
+    public function jsToHtml()
+    {
+        $defaultWebLibraryRenderer = null;
+
+        foreach ($this->webLibraries as $library) {
+            /* @var $library WebLibraryInterface */
+            $renderer = $library->getRenderer();
+            if ($renderer == null) {
+                if ($defaultWebLibraryRenderer == null) {
+                    $defaultWebLibraryRenderer = MoufManager::getMoufManager()->getInstance(
+                        'defaultWebLibraryRenderer'
+                    );
+                }
+                $renderer = $defaultWebLibraryRenderer;
+            }
+            /* @var $renderer WebLibraryRendererInterface */
+            $renderer->toJsHtml($library);
+        }
+    }
+
+    /**
+     * Renders the HTML in charge of loading additional files.
+     * The Html is echoed directly into the output.
+     *
+     */
+    public function additionalToHtml()
+    {
+        $defaultWebLibraryRenderer = null;
+
+        foreach ($this->webLibraries as $library) {
+            /* @var $library WebLibraryInterface */
+            $renderer = $library->getRenderer();
+            if ($renderer == null) {
+                if ($defaultWebLibraryRenderer == null) {
+                    $defaultWebLibraryRenderer = MoufManager::getMoufManager()->getInstance(
+                        'defaultWebLibraryRenderer'
+                    );
+                }
+                $renderer = $defaultWebLibraryRenderer;
+            }
+            /* @var $renderer WebLibraryRendererInterface */
+            $renderer->toAdditionalHtml($library);
+        }
     }
 }
 ?>
