@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace Mouf\Html\Utils\WebLibraryManager;
 
 use Mouf\MoufManager;
@@ -14,112 +14,124 @@ use Mouf\Html\HtmlElement\HtmlElementInterface;
 
  * <p>If you have specific needs and don't want to use the <b>WebLibrary</b> class, you can either create your own class
  * that implements the WebLibraryInterface, or provide your own "renderer".</p>
- * 
- * 
+ *
+ *
  * @author David Négrier
  * @Component
  */
 class WebLibraryManager implements HtmlElementInterface {
-	
-	/**
-	 * The array of all included libraries.
-	 * 
-	 * @var array<WebLibraryInterface>
-	 */
-	private $webLibraries = array();
-	
-	/**
-	 * false if the toHtml method has not yet been called, true if it has been called.
-	 * @var boolean
-	 */
-	private $rendered = false;
-	
-	/**
-	 * Adds a library to the list of libraries that should be loaded in the web page.
-	 * <p>The function will also load the dependencies (if any) and will have no effect if the library has already been loaded.</p>
-	 * 
-	 * @param WebLibraryInterface $library
-	 */
-	public function addLibrary(WebLibraryInterface $library) {
-		if ($this->rendered) {
-			throw new WebLibraryException("The libraries have already been rendered. This call to addLibrary should be performed BEFORE the toHtml method of WebLibraryManager is called.");
-		}
-		if (array_search($library, $this->webLibraries) === false) {
-			// Let's start by adding dependencies.
-			$dependencies = $library->getDependencies();
-			if ($dependencies) {
-				foreach ($dependencies as $dependency) {
-					/* @var $dependency WebLibraryInterface */
-					$this->addLibrary($dependency);
-				}
-			}
-			
-			$this->webLibraries[] = $library;
-		}
-	}
-	
-	// TODO: add: addJs and addCss file
-	
-	/**
-	 * The list of all libraries that should be loaded in the web page.
-	 * <p>If you do not pass all dependencies of a library, the dependencies will be loaded automatically.</p>
-	 * 
-	 * @Property
-	 * @param array<WebLibraryInterface> $libraries
-	 */
-	public function setWebLibraries($libraries) {
-		foreach ($libraries as $library) {
-			$this->addLibrary($library);
-		}
-	}
-	
-	/**
-	 * Renders the HTML in charge of loading CSS and JS files.
-	 * The Html is echoed directly into the output.
-	 * This function should be called within the head tag.
-	 *
-	 */
-	public function toHtml() {
-		/*if ($this->rendered) {
-			throw new WebLibraryException("The library has already been rendered.");
-		}*/
-		
-		$defaultWebLibraryRenderer = null;
-		
-		foreach ($this->webLibraries as $library) {
-			/* @var $library WebLibraryInterface */
-			$renderer = $library->getRenderer();
-			if ($renderer == null) {
-				if ($defaultWebLibraryRenderer == null) {
-					$defaultWebLibraryRenderer = MoufManager::getMoufManager()->getInstance('defaultWebLibraryRenderer');
-				}
-				$renderer = $defaultWebLibraryRenderer;
-			}
-			/* @var $renderer WebLibraryRendererInterface */
-			$renderer->toCssHtml($library);
-		}
+    const CSS = 'css';
+    const JS = 'js';
+    const ADDITIONAL = 'additional';
 
-		foreach ($this->webLibraries as $library) {
-			/* @var $library WebLibraryInterface */
-			$renderer = $library->getRenderer();
-			if ($renderer == null) {
-				$renderer = $defaultWebLibraryRenderer;
-			}
-			/* @var $renderer WebLibraryRendererInterface */
-			$renderer->toJsHtml($library);
-		}
-		
-		foreach ($this->webLibraries as $library) {
-			/* @var $library WebLibraryInterface */
-			$renderer = $library->getRenderer();
-			if ($renderer == null) {
-				$renderer = $defaultWebLibraryRenderer;
-			}
-			/* @var $renderer WebLibraryRendererInterface */
-			$renderer->toAdditionalHtml($library);
-		}
-		
-		$this->rendered = true;
-	}
+    /**
+     * The array of all included libraries.
+     *
+     * @var array<WebLibraryInterface>
+     */
+    private $webLibraries = array();
+
+    /**
+     * false if the toHtml method has not yet been called, true if it has been called.
+     * @var boolean
+     */
+    private $rendered = false;
+
+    /**
+     * Adds a library to the list of libraries that should be loaded in the web page.
+     * <p>The function will also load the dependencies (if any) and will have no effect if the library has already been loaded.</p>
+     *
+     * @param WebLibraryInterface $library
+     */
+    public function addLibrary(WebLibraryInterface $library) {
+        if ($this->rendered) {
+            throw new WebLibraryException("The libraries have already been rendered. This call to addLibrary should be performed BEFORE the toHtml method of WebLibraryManager is called.");
+        }
+        if (array_search($library, $this->webLibraries) === false) {
+            // Let's start by adding dependencies.
+            $dependencies = $library->getDependencies();
+            if ($dependencies) {
+                foreach ($dependencies as $dependency) {
+                    /* @var $dependency WebLibraryInterface */
+                    $this->addLibrary($dependency);
+                }
+            }
+
+            $this->webLibraries[] = $library;
+        }
+    }
+
+    // TODO: add: addJs and addCss file
+
+    /**
+     * The list of all libraries that should be loaded in the web page.
+     * <p>If you do not pass all dependencies of a library, the dependencies will be loaded automatically.</p>
+     *
+     * @Property
+     * @param array<WebLibraryInterface> $libraries
+     */
+    public function setWebLibraries($libraries) {
+        foreach ($libraries as $library) {
+            $this->addLibrary($library);
+        }
+    }
+
+    /**
+     * Renders the HTML in charge of loading CSS and JS files.
+     * The Html is echoed directly into the output.
+     * This function should be called within the head tag.
+     *
+     */
+    public function toHtml($type = null)
+    {
+        /*if ($this->rendered) {
+            throw new WebLibraryException("The library has already been rendered.");
+        }*/
+
+        $defaultWebLibraryRenderer = null;
+
+        if (!$type || $type == WebLibraryManager::CSS) {
+            foreach ($this->webLibraries as $library) {
+                /* @var $library WebLibraryInterface */
+                $renderer = $library->getRenderer();
+                if ($renderer == null) {
+                    if ($defaultWebLibraryRenderer == null) {
+                        $defaultWebLibraryRenderer = MoufManager::getMoufManager()->getInstance(
+                            'defaultWebLibraryRenderer'
+                        );
+                    }
+                    $renderer = $defaultWebLibraryRenderer;
+                }
+                /* @var $renderer WebLibraryRendererInterface */
+                $renderer->toCssHtml($library);
+            }
+        }
+
+        if (!$type || $type == WebLibraryManager::JS) {
+            foreach ($this->webLibraries as $library) {
+                /* @var $library WebLibraryInterface */
+                $renderer = $library->getRenderer();
+                if ($renderer == null) {
+                    $renderer = $defaultWebLibraryRenderer;
+                }
+                /* @var $renderer WebLibraryRendererInterface */
+                $renderer->toJsHtml($library);
+            }
+        }
+
+        if (!$type || $type == WebLibraryManager::ADDITIONAL) {
+            foreach ($this->webLibraries as $library) {
+                /* @var $library WebLibraryInterface */
+                $renderer = $library->getRenderer();
+                if ($renderer == null) {
+                    $renderer = $defaultWebLibraryRenderer;
+                }
+                /* @var $renderer WebLibraryRendererInterface */
+                $renderer->toAdditionalHtml($library);
+            }
+        }
+
+        $this->rendered = true;
+    }
 }
 ?>
