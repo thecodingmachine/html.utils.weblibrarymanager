@@ -88,9 +88,9 @@ class WebLibraryManager implements HtmlElementInterface {
             throw new WebLibraryException("The library has already been rendered.");
         }*/
 
-        $this->cssToHtml();
-        $this->jsToHtml();
-        $this->additionalToHtml();
+        $this->toCss();
+        $this->toHtml();
+        $this->toAdditional();
 
         $this->rendered = true;
     }
