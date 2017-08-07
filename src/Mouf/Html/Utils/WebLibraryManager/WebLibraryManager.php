@@ -145,9 +145,7 @@ class WebLibraryManager implements HtmlElementInterface {
         foreach ($this->webLibraries as $library) {
             $this->renderer->render($library, 'css');
         }
-        $echo =  ob_get_contents();
-        ob_end_clean();
-        return $echo;
+        return ob_get_clean();
     }
 
     /**
@@ -158,9 +156,7 @@ class WebLibraryManager implements HtmlElementInterface {
         foreach ($this->webLibraries as $library) {
             $this->renderer->render($library, 'js');
         }
-        $echo =  ob_get_contents();
-        ob_end_clean();
-        return $echo;
+        return ob_get_clean();
     }
 
     /**
@@ -171,8 +167,6 @@ class WebLibraryManager implements HtmlElementInterface {
         foreach ($this->webLibraries as $library) {
             $this->renderer->render($library, 'additional');
         }
-        $echo =  ob_get_contents();
-        ob_end_clean();
-        return $echo;
+        return ob_get_clean();
     }
 }
