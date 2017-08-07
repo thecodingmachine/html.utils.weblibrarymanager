@@ -95,18 +95,10 @@ class WebLibraryManager implements HtmlElementInterface {
 			throw new WebLibraryException("The library has already been rendered.");
 		}*/
 		
-		foreach ($this->webLibraries as $library) {
-			$this->renderer->render($library, 'css');
-		}
+		echo $this->getCssHtml();
+		echo $this->getJsHtml();
+		echo $this->getAdditionalHtml();
 
-		foreach ($this->webLibraries as $library) {
-			$this->renderer->render($library, 'js');
-		}
-		
-		foreach ($this->webLibraries as $library) {
-			$this->renderer->render($library, 'additional');
-		}
-		
 		$this->rendered = true;
 	}
 
@@ -144,4 +136,43 @@ class WebLibraryManager implements HtmlElementInterface {
 		}
 		$this->webLibraries[] = new InlineWebLibrary(null, null, $additionalScript);
 	}
+
+    /**
+     * @return string
+     */
+	public function getCssHtml() {
+	    ob_start();
+        foreach ($this->webLibraries as $library) {
+            $this->renderer->render($library, 'css');
+        }
+        $echo =  ob_get_contents();
+        ob_end_clean();
+        return $echo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getJsHtml() {
+        ob_start();
+        foreach ($this->webLibraries as $library) {
+            $this->renderer->render($library, 'js');
+        }
+        $echo =  ob_get_contents();
+        ob_end_clean();
+        return $echo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAdditionalHtml() {
+        ob_start();
+        foreach ($this->webLibraries as $library) {
+            $this->renderer->render($library, 'additional');
+        }
+        $echo =  ob_get_contents();
+        ob_end_clean();
+        return $echo;
+    }
 }
