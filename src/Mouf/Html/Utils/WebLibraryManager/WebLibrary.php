@@ -31,6 +31,13 @@ class WebLibrary implements WebLibraryInterface {
 	 * @var array<WebLibraryInterface>
 	 */
 	private $dependencies = array();
+
+    /**
+     * Boolean whether the dependencies are called asynchronously
+     *
+     * @var bool
+     */
+    private $async = false;
 	
 	
 	/**
@@ -139,4 +146,23 @@ class WebLibrary implements WebLibraryInterface {
 	public function setDependencies($libraries) {
 		$this->dependencies = $libraries;
 	}
+
+    /**
+     * Returns if the dependencies are loaded asynchronously
+     *
+     * @return bool
+     */
+    public function isAsync() {
+        return $this->async;
+    }
+
+    /**
+     * Set if the dependencies are loaded asynchronously
+     *
+     * @Property
+     * @param bool $async
+     */
+    public function setIsAsync($async) {
+        $this->async = $async;
+    }
 }

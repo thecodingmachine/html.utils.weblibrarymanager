@@ -7,6 +7,6 @@ if ($files) {
 		} else {
 			$url = $file;
 		}	
-		echo '<script type="text/javascript" src="'.htmlspecialchars($url, ENT_QUOTES).'"></script>'."\n";
+		echo '<script type="text/javascript" src="'.htmlspecialchars($url, ENT_QUOTES).'" '.($object->isAsync()?'async':'').'></script>'."\n";
 	}
 }
