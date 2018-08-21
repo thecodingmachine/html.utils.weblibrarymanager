@@ -2,7 +2,9 @@
 [![Total Downloads](https://poser.pugx.org/mouf/html.utils.weblibrarymanager/downloads.svg)](https://packagist.org/packages/mouf/html.utils.weblibrarymanager)
 [![Latest Unstable Version](https://poser.pugx.org/mouf/html.utils.weblibrarymanager/v/unstable.svg)](https://packagist.org/packages/mouf/html.utils.weblibrarymanager)
 [![License](https://poser.pugx.org/mouf/html.utils.weblibrarymanager/license.svg)](https://packagist.org/packages/mouf/html.utils.weblibrarymanager)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/thecodingmachine/html.utils.weblibrarymanager/badges/quality-score.png?b=3.1)](https://scrutinizer-ci.com/g/thecodingmachine/html.utils.weblibrarymanager/?branch=3.1)
+[![Build Status](https://travis-ci.org/thecodingmachine/html.utils.weblibrarymanager.svg?branch=4.0)](https://travis-ci.org/thecodingmachine/html.utils.weblibrarymanager)
+[![Coverage Status](https://coveralls.io/repos/thecodingmachine/html.utils.weblibrarymanager/badge.svg?branch=4.0&service=github)](https://coveralls.io/github/thecodingmachine/html.utils.weblibrarymanager?branch=4.0)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/thecodingmachine/html.utils.weblibrarymanager/badges/quality-score.png?b=4.0)](https://scrutinizer-ci.com/g/thecodingmachine/html.utils.weblibrarymanager/?branch=4.0)
 
 WebLibraryManager: a PHP class to manage Javascript/CSS dependencies in your project
 ====================================================================================
@@ -55,7 +57,7 @@ Still want to install it manually? Use the packagist package:
 ```json
 {
     "require": {
-        "mouf/html.utils.weblibrarymanager": "~3.1"
+        "mouf/html.utils.weblibrarymanager": "^4"
     }
 }
 ```
