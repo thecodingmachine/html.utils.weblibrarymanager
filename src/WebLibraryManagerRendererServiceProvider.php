@@ -12,6 +12,7 @@ class WebLibraryManagerRendererServiceProvider extends AbstractPackageRendererSe
      */
     public static function getTemplateDirectory(): string
     {
-        return 'vendor/mouf/html.utils.weblibrarymanager/src/templates';
+        $path = \ComposerLocator::getPath('mouf/html.utils.weblibrarymanager');
+        return $path.'/templates';
     }
 }

@@ -185,7 +185,7 @@ class InlineWebLibrary implements WebLibraryInterface
     /**
      * A custom Html element that will be inserted into the JS scripts into your &lt;head&gt; tag.
      */
-    public function getJsElement(): HtmlElementInterface
+    public function getJsElement(): ?HtmlElementInterface
     {
         return $this->jsElement;
     }
@@ -193,7 +193,7 @@ class InlineWebLibrary implements WebLibraryInterface
     /**
      * A custom CSS element that will be inserted into the JS scripts into your &lt;head&gt; tag.
      */
-    public function getCssElement(): HtmlElementInterface
+    public function getCssElement(): ?HtmlElementInterface
     {
         return $this->cssElement;
     }
@@ -202,7 +202,7 @@ class InlineWebLibrary implements WebLibraryInterface
      * A custom Html element that will be inserted into the additional scripts into your &lt;head&gt; tag.
      * The content of this file is displayed BELOW JS and CSS inclusion.
      */
-    public function getAdditionalElement(): HtmlElementInterface
+    public function getAdditionalElement(): ?HtmlElementInterface
     {
         return $this->additionalElement;
     }

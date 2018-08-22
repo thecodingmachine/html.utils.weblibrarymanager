@@ -26,7 +26,7 @@ class WebLibraryManager implements HtmlElementInterface
      *
      * @var WebLibraryInterface[]
      */
-    private $webLibraries;
+    private $webLibraries = [];
     
     /**
      * false if the toHtml method has not yet been called, true if it has been called.
