@@ -18,4 +18,3 @@ script:
 - composer phpstan
 after_script:
 - php vendor/bin/coveralls -v
-- if [ "$COUSCOUS" = "true" ] ; then vendor/bin/couscous travis-auto-deploy --php-version=7.1 -vvv; fi
