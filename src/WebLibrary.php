@@ -39,19 +39,26 @@ class WebLibrary implements WebLibraryInterface
      * @var bool
      */
     private $async = false;
-    
-    
+
+    /**
+     * @var string
+     */
+    private $rootUrl;
+
+
     /**
      * Constructor
      *
      * @param string[] $jsFiles List of JS files to add in header. If you don't specify http:// or https:// and if your URL does not start with /, the file is considered to be relative to ROOT_URL.
      * @param string[] $cssFiles List of CSS files to add in header. If you don't specify http:// or https:// and if your URL does not start with /, the file is considered to be relative to ROOT_URL.
+     * @param string $rootUrl The ROOT url of your application. It should not contain the complete domain name, only the path, starting and ending with a /. For instance: '/foo/bar/' or '/'
      */
     
-    public function __construct(array $jsFiles = [], array $cssFiles = [])
+    public function __construct(array $jsFiles = [], array $cssFiles = [], string $rootUrl = '/')
     {
         $this->jsFiles= $jsFiles;
         $this->cssFiles = $cssFiles;
+        $this->rootUrl = $rootUrl;
     }
     
     /**
@@ -163,5 +170,13 @@ class WebLibrary implements WebLibraryInterface
     public function setIsAsync(bool $async): void
     {
         $this->async = $async;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRootUrl(): string
+    {
+        return $this->rootUrl;
     }
 }

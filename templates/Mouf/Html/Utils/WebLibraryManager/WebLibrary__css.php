@@ -3,7 +3,7 @@ $files = $object->getCssFiles();
 if ($files) {
     foreach ($files as $file) {
         if (strpos($file, 'http://') === false && strpos($file, 'https://') === false && strpos($file, '/') !== 0) {
-            $url = ROOT_URL.$file;
+            $url = $object->getRootUrl().$file;
         } else {
             $url = $file;
         }
