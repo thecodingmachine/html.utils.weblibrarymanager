@@ -23,7 +23,8 @@
 		"mouf/html.renderer" : "^2.0",
 		"mouf/html.htmlelement" : "^2.0",
 		"thecodingmachine/funky": "^1",
-		"mindplay/composer-locator": "^2.1.3"
+		"mindplay/composer-locator": "^2.1.3",
+		"psr/container": "^1"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^7.3.1",
