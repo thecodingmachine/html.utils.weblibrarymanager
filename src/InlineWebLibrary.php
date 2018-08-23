@@ -122,7 +122,7 @@ class InlineWebLibrary implements WebLibraryInterface
      * Sets the script outputed in the JS section
      * @param string $script
      */
-    function setJSFromText(string $script): void
+    public function setJSFromText(string $script): void
     {
         $this->jsElement = new HtmlString($script);
     }
@@ -135,7 +135,7 @@ class InlineWebLibrary implements WebLibraryInterface
      * @param Scopable $scope
      * @param bool $relativeToRootPath
      */
-    function setJSFromFile(string $filename, Scopable $scope = null, bool $relativeToRootPath = true): void
+    public function setJSFromFile(string $filename, Scopable $scope = null, bool $relativeToRootPath = true): void
     {
         $this->jsElement = new HtmlFromFile($filename, $scope, $relativeToRootPath);
     }
@@ -144,7 +144,7 @@ class InlineWebLibrary implements WebLibraryInterface
      * Sets the css outputed in the CSS section
      * @param string $css
      */
-    function setCSSFromText(string $css): void
+    public function setCSSFromText(string $css): void
     {
         $this->cssElement = new HtmlString($css);
     }
@@ -156,7 +156,7 @@ class InlineWebLibrary implements WebLibraryInterface
      * @param Scopable $scope
      * @param bool $relativeToRootPath
      */
-    function setCSSFromFile(string $filename, Scopable $scope = null, bool $relativeToRootPath = true): void
+    public function setCSSFromFile(string $filename, Scopable $scope = null, bool $relativeToRootPath = true): void
     {
         $this->cssElement = new HtmlFromFile($filename, $scope, $relativeToRootPath);
     }
@@ -165,7 +165,7 @@ class InlineWebLibrary implements WebLibraryInterface
      * Sets the additional items outputed below the JS and CSS sections
      * @param string $script
      */
-    function setAdditionalElementFromText(string $script): void
+    public function setAdditionalElementFromText(string $script): void
     {
         $this->additionalElement = new HtmlString($script);
     }
@@ -177,7 +177,7 @@ class InlineWebLibrary implements WebLibraryInterface
      * @param Scopable $scope
      * @param bool $relativeToRootPath
      */
-    function setAdditionalElementFromFile(string $filename, Scopable $scope = null, bool $relativeToRootPath = true): void
+    public function setAdditionalElementFromFile(string $filename, Scopable $scope = null, bool $relativeToRootPath = true): void
     {
         $this->additionalElement = new HtmlFromFile($filename, $scope, $relativeToRootPath);
     }
