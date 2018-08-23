@@ -149,17 +149,27 @@ The WebLibraryManager will group its output in 3 categories:
 
 Adding a new WebLibrary by configuration
 ----------------------------------------
-The _WebLibraryManager_ comes with a default instance *defaultWebLibraryManager*, that is used by the template.
 
-![Web library manager instance](doc/images/defaultWebLibraryManager.png)
+You can register a new WebLibrary in your container using a service provider.
 
-You just need to add a new *WebLibrary* to the instance list.
+Assuming you use [Funky for creating your service providers](https://github.com/thecodingmachine/funky), your code will look like this:
 
-Then, edit this weblibrary, and add the JS and CSS files you want to include.
+```php
+use TheCodingMachine\Funky\ServiceProvider;
 
-![Web library instance](doc/images/weblibrary.png)
+class MyWebLibraryServiceProvider extends ServiceProvider {
+    /**
+     * @Factory(name="myWebLibrary", tags={@Tag(name="webLibraries")})
+     */
+    public static function createWebLibrary(ContainerInterface $container): WebLibrary
+    {
+        return new WebLibrary(['foo/bar.js', 'http://exemple.com/foo.js'],
+            ['foo/bar.css', 'http://exemple.com/foo.css'], $container->get('ROOT_URL'));
+    }
+};
+```
 
-<div class="alert">_Note:_ Do not start the JS or CSS file path with a /. That way, the path is relative to the
+<div class="alert alert-warning"><em>Note:</em> Do not start the JS or CSS file path with a /. That way, the path is relative to the
 ROOT_URL (the root of your web application). You can also enter a full path (http://...) if you want to
 use hosted libraries, CDN, etc...</div>
 
