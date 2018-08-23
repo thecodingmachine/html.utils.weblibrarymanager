@@ -2,7 +2,9 @@
 [![Total Downloads](https://poser.pugx.org/mouf/html.utils.weblibrarymanager/downloads.svg)](https://packagist.org/packages/mouf/html.utils.weblibrarymanager)
 [![Latest Unstable Version](https://poser.pugx.org/mouf/html.utils.weblibrarymanager/v/unstable.svg)](https://packagist.org/packages/mouf/html.utils.weblibrarymanager)
 [![License](https://poser.pugx.org/mouf/html.utils.weblibrarymanager/license.svg)](https://packagist.org/packages/mouf/html.utils.weblibrarymanager)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/thecodingmachine/html.utils.weblibrarymanager/badges/quality-score.png?b=3.1)](https://scrutinizer-ci.com/g/thecodingmachine/html.utils.weblibrarymanager/?branch=3.1)
+[![Build Status](https://travis-ci.org/thecodingmachine/html.utils.weblibrarymanager.svg?branch=4.0)](https://travis-ci.org/thecodingmachine/html.utils.weblibrarymanager)
+[![Coverage Status](https://coveralls.io/repos/thecodingmachine/html.utils.weblibrarymanager/badge.svg?branch=4.0&service=github)](https://coveralls.io/github/thecodingmachine/html.utils.weblibrarymanager?branch=4.0)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/thecodingmachine/html.utils.weblibrarymanager/badges/quality-score.png?b=4.0)](https://scrutinizer-ci.com/g/thecodingmachine/html.utils.weblibrarymanager/?branch=4.0)
 
 WebLibraryManager: a PHP class to manage Javascript/CSS dependencies in your project
 ====================================================================================
@@ -16,14 +18,12 @@ Introduction
 ------------
 
 WebLibraryManager is a [Mouf package](http://mouf-php.com) that allows you to import CSS/Javascript in your project the simple way.
+Since v4, WebLibraryManager is using [container-interop/service-provider](https://github.com/container-interop/service-provider) and therefore is framework agnostic.
 
-You can use it without Mouf, but most of the time, you will use Mouf and its install process to get quickly started.
+When installed, the WebLibraryManager package creates a `Mouf\Html\Utils\WebLibraryManager\WebLibraryManager` instance.
 
-When installed, the WebLibraryManager package creates a `defaultWebLibraryManager` instance (from
-`WebLibraryManager` class).
-
-The usage is simple: when you want to import a new Javascript/CSS library, you create an instance of *WebLibrary*, you put the list of CSS/JS files in it, and you add this instance to *defaultWebLibraryManager*.
-When you call the `toHtml()` method of the *defaultWebLibraryManager*, it will output all HTML tags to import CSS files first, then all JS files.
+The usage is simple: when you want to import a new Javascript/CSS library, you create an instance of *WebLibrary*, you put the list of CSS/JS files in it, and you add this instance to *WebLibraryManager*.
+When you call the `toHtml()` method of the *WebLibraryManager*, it will output all HTML tags to import CSS files first, then all JS files.
 
 If your WebLibrary depends on other web libraries (for instance, if you import jQueryUI, that requires jQuery), the WebLibraryManager will manage all the dependencies for you.
 If you have special needs about the way to import CSS/JS files, you can develop your own WebLibraryRenderer that will render your library (for instance with inline JS, ...)
@@ -55,7 +55,7 @@ Still want to install it manually? Use the packagist package:
 ```json
 {
     "require": {
-        "mouf/html.utils.weblibrarymanager": "~3.1"
+        "mouf/html.utils.weblibrarymanager": "^4"
     }
 }
 ```
@@ -81,15 +81,6 @@ class MyController {
 	}
 }
 ```
-
-You can also directly instanciate the webLibraryManager using Mouf (although it is not recommended
-since that would be using Mouf as a service locator instead of a DI container):
-
-```php
-$webLibraryManager = Mouf::getDefaultWebLibraryManager();
-...
-```
-
 
 Adding a JS or CSS file programmatically
 ----------------------------------------
@@ -158,17 +149,27 @@ The WebLibraryManager will group its output in 3 categories:
 
 Adding a new WebLibrary by configuration
 ----------------------------------------
-The _WebLibraryManager_ comes with a default instance *defaultWebLibraryManager*, that is used by the template.
 
-![Web library manager instance](doc/images/defaultWebLibraryManager.png)
+You can register a new WebLibrary in your container using a service provider.
 
-You just need to add a new *WebLibrary* to the instance list.
+Assuming you use [Funky for creating your service providers](https://github.com/thecodingmachine/funky), your code will look like this:
 
-Then, edit this weblibrary, and add the JS and CSS files you want to include.
+```php
+use TheCodingMachine\Funky\ServiceProvider;
 
-![Web library instance](doc/images/weblibrary.png)
+class MyWebLibraryServiceProvider extends ServiceProvider {
+    /**
+     * @Factory(name="myWebLibrary", tags={@Tag(name="webLibraries")})
+     */
+    public static function createWebLibrary(ContainerInterface $container): WebLibrary
+    {
+        return new WebLibrary(['foo/bar.js', 'http://exemple.com/foo.js'],
+            ['foo/bar.css', 'http://exemple.com/foo.css'], $container->get('ROOT_URL'));
+    }
+};
+```
 
-<div class="alert">_Note:_ Do not start the JS or CSS file path with a /. That way, the path is relative to the
+<div class="alert alert-warning"><em>Note:</em> Do not start the JS or CSS file path with a /. That way, the path is relative to the
 ROOT_URL (the root of your web application). You can also enter a full path (http://...) if you want to
 use hosted libraries, CDN, etc...</div>
 
@@ -194,20 +195,3 @@ Rendering is performed by the 3 templates here:
 - [Additional template](https://github.com/thecodingmachine/modules.google-analytics/blob/4.0/src/templates/Mouf/Modules/GoogleAnalytics/GoogleAnalyticsWebLibrary__additional.php) contains the Google Analytics code.
 
 Because the Google Analytics tracking code is in the "additional" section, it will be displayed after all CSS and JS files are loaded.
-
-
-Support for Rob Loach's components
-----------------------------------
-
-If you are looking for Javascript packages into Composer, you certainly found some packages that are
-respecting the "component" bundling format. [This is a format developped by Rob Loach](http://github.com/robloach/component-installer) and that
-enables packaging Javascript and CSS files in Packagist easily.
-
-For instance, have a look at the **component/jquery** package on Packagist.
-
-The **WebLibraryManager** has a built in support for these components. If you import one of those Composer packages
-in your project, the **WebLibraryManager** will detect these packages and will automatically create the **WebLibrary** instances
-matching those packages.
-
-Note: if you import these packages _before_ installing the WebLibraryManager, Mouf will detect the missing instances on the
-status page and will offer a button to create those missing instances automatically.

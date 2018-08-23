@@ -1,1 +1,6 @@
 *~
+composer.lock
+/mouf
+/vendor
+/.discovery
+/build
