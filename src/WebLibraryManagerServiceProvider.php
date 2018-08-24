@@ -37,7 +37,7 @@ class WebLibraryManagerServiceProvider extends ServiceProvider implements Scopab
     public static function createRootUrlWebLibrary(ContainerInterface $container): InlineWebLibrary
     {
         $scope = new self();
-        $scope->rootUrl = $container->get('ROOT_URL');
+        $scope->rootUrl = $container->get('root_url');
 
         $webLibrarayManagerDir = \ComposerLocator::getPath('mouf/html.utils.weblibrarymanager');
         $htmlFromFile = new HtmlFromFile($webLibrarayManagerDir.'/javascript/rootUrl.php', $scope);
