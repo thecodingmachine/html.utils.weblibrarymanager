@@ -22,7 +22,7 @@ class WebLibraryManagerTest extends TestCase
             public static function createWebLibrary(ContainerInterface $container): WebLibrary
             {
                 return new WebLibrary(['foo/bar.js', 'http://exemple.com/foo.js'],
-                    ['foo/bar.css', 'http://exemple.com/foo.css'], $container->get('ROOT_URL'));
+                    ['foo/bar.css', 'http://exemple.com/foo.css'], $container->get('root_url'));
             }
         };
 
@@ -33,7 +33,7 @@ class WebLibraryManagerTest extends TestCase
         $serviceProviders[] = $webLibraryServiceProvider;
 
         $container = new Container($serviceProviders);
-        $container->set('ROOT_URL', '/foo/bar/');
+        $container->set('root_url', '/foo/bar/');
 
         /* @var WebLibraryManager $webLibraryManager */
         $webLibraryManager = $container->get(WebLibraryManager::class);
