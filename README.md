@@ -164,7 +164,7 @@ class MyWebLibraryServiceProvider extends ServiceProvider {
     public static function createWebLibrary(ContainerInterface $container): WebLibrary
     {
         return new WebLibrary(['foo/bar.js', 'http://exemple.com/foo.js'],
-            ['foo/bar.css', 'http://exemple.com/foo.css'], $container->get('ROOT_URL'));
+            ['foo/bar.css', 'http://exemple.com/foo.css'], $container->get('root_url'));
     }
 };
 ```
