@@ -1,0 +1,3 @@
+{% for cssFile in this.getCssFiles() %}
+<link href='{{ absolute_url(cssFile) }}' rel='stylesheet' type='text/css' />
+{% endfor %}

@@ -1,0 +1,3 @@
+{% for jsFile in this.getJsFiles() %}
+<script type="text/javascript" src="{{ absolute_url(jsFile) }}" {{ jsFile.isAsync?"async":"" }}></script>
+{% endfor %}
