@@ -22,7 +22,7 @@ class WebLibraryManagerTest extends TestCase
             public static function createWebLibrary(ContainerInterface $container): WebLibrary
             {
                 return new WebLibrary(['foo/bar.js', 'http://exemple.com/foo.js'],
-                    ['foo/bar.css', 'http://exemple.com/foo.css'], $container->get('root_url'));
+                    ['foo/bar.css', 'http://exemple.com/foo.css']);
             }
         };
 
