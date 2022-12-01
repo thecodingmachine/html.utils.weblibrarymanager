@@ -37,9 +37,6 @@
 		"thecodingmachine/twig-universal-module": "^1",
 		"thecodingmachine/symfony-cache-universal-module": "^1"
 	},
-	"conflict": {
-		"mouf/mouf": "~2.0.0"
-	},
 	"autoload" : {
 		"psr-4" : {
 			"Mouf\\Html\\Utils\\WebLibraryManager\\" : "src/"
